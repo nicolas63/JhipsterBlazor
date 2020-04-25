@@ -1,4 +1,4 @@
-<Bar Class="navbar navbar-dark navbar-expand-md bg-dark" Breakpoint="Breakpoint.Desktop">
+<Bar Style="height: 64px;" Class="navbar navbar-dark navbar-expand-md bg-dark" Breakpoint="Breakpoint.Desktop">
     <BarMenu>
         <BarStart>
             <BarItem Class="navbar-brand logo">
@@ -12,7 +12,7 @@
         </BarStart>
         <BarEnd>
             <BarItem Class="nav-link">
-                <Icon Name='"fa-home"'/>
+                <Icon Name='"fa-home"' />
                 Home
             </BarItem>
             <BarItem>
@@ -26,6 +26,10 @@
                             <Icon Name='"fa-sign-in-alt"' />
                             Sign in
                         </BarDropdownItem>
+                        <BarDropdownItem Class="dropdown-item" To="register">
+                            <Icon Name='"fa-user-plus"' />
+                            Register
+                        </BarDropdownItem>
                     </BarDropdownMenu>
                 </BarDropdown>
             </BarItem>
@@ -33,6 +37,6 @@
     </BarMenu>
 </Bar>
 
-
 @code {
+   
 }
