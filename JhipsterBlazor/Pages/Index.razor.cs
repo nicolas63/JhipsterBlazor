@@ -2,28 +2,27 @@ using System.Threading.Tasks;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace JhipsterBlazor.Pages
 {
     public partial class Index : ComponentBase
     {
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public AuthenticationStateProvider AuthenticationService { get; set; }
 
-        public UserModel CurrentUser => AuthenticationService.CurrentUser;
+        [CascadingParameter]
+        Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        public EventCallback<UserModel> CurrentUserChanged { get; set; }
+        public UserModel CurrentUser => (AuthenticationService as IAuthenticationService)?.CurrentUser;
 
-        
-        protected override Task OnAfterRenderAsync(bool firstRender)
+        protected async override Task OnInitializedAsync()
         {
-            OnCurrentUserChanged();
-            return base.OnAfterRenderAsync(firstRender);
+            await AuthenticationStateTask;
         }
-        
+
         private void OnCurrentUserChanged()
         {
-            CurrentUserChanged.InvokeAsync(CurrentUser);
         }
 
 

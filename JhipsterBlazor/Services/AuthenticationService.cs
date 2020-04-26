@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Blazored.SessionStorage;
 using JhipsterBlazor.Models;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace JhipsterBlazor.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : AuthenticationStateProvider,IAuthenticationService
     {
         private const string AuthenticatationUrl = "/api/authenticate";
         private const string AccountUrl = "/api/account";
@@ -50,6 +54,7 @@ namespace JhipsterBlazor.Services
             IsAuthenticated = false;
             CurrentUser = null;
             _sessionStorage.RemoveItem(JhiAuthenticationtoken);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
         private async Task SetUserAndAuthorizationHeader(JwtToken jwtToken)
@@ -65,8 +70,30 @@ namespace JhipsterBlazor.Services
             {
                 IsAuthenticated = false;
             }
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-      
+
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            var identity = new ClaimsIdentity();
+            if (IsAuthenticated)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier,CurrentUser.Login), 
+                    new Claim(ClaimTypes.Name, CurrentUser.FirstName),
+                    new Claim(ClaimTypes.Email,CurrentUser.Email),
+                    new Claim(ClaimTypes.GivenName,CurrentUser.FirstName),
+                    new Claim(ClaimTypes.Surname,CurrentUser.LastName),
+                    new Claim("langKey",CurrentUser.LangKey),
+                    new Claim("picture",CurrentUser.ImageUrl)
+                };
+                claims.AddRange(CurrentUser.Roles?.Select(role => new Claim(ClaimTypes.Role,role)) ?? Array.Empty<Claim>());
+                identity = new ClaimsIdentity(claims);
+            }
+
+            return new AuthenticationState(new ClaimsPrincipal(identity));
+        }
     }
 }

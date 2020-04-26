@@ -8,6 +8,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using JhipsterBlazor.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,17 @@ namespace JhipsterBlazor
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddSingleton<ISessionStorageService, SessionStorageService>().AddSingleton<ISyncSessionStorageService, SessionStorageService>();
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddSingleton<AuthenticationStateProvider, AuthenticationService>();
 
+            builder.Services.AddAuthorizationCore(config =>
+            {
+                //config.AddPolicy(Policies.IsAdmin, Policies.IsAdminPolicy());
+                //config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
+                //config.AddPolicy(Policies.IsReadOnly, Policies.IsUserPolicy());
+                // config.AddPolicy(Policies.IsMyDomain, Policies.IsMyDomainPolicy());  Only works on the server end
+            });
+
+          
 
             var host = builder.Build();
 
