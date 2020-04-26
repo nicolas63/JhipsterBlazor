@@ -20,7 +20,7 @@ namespace JhipsterBlazor.Pages
 
         private async Task HandleSubmit()
         {
-            var result = await AuthenticationService.Authenticate(LoginModel);
+            var result = await AuthenticationService.SignIn(LoginModel);
             IsAuthenticateError = !result; 
             LoginModel = new LoginModel();
             if (result)
