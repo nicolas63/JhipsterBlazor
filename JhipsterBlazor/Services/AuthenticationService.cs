@@ -8,9 +8,12 @@ namespace JhipsterBlazor.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private const string AuthenticatationUri = "/api/authenticate";
+        private const string AuthenticatationUrl = "/api/authenticate";
+        private const string AccountUrl = "/api/account";
+
         private readonly HttpClient _httpClient;
         public bool IsAuthenticated { get; set; }
+        public UserModel CurrentUser { get; set; }
 
         public AuthenticationService(HttpClient httpClient)
         {
@@ -20,10 +23,14 @@ namespace JhipsterBlazor.Services
 
         public async Task<bool> Authenticate(LoginModel loginModel)
         {
-            var result = await _httpClient.PostAsJsonAsync(AuthenticatationUri,loginModel);
+            var result = await _httpClient.PostAsJsonAsync(AuthenticatationUrl, loginModel);
             if (result.IsSuccessStatusCode)
             {
                 IsAuthenticated = true;
+                var bearer = await result.Content.ReadFromJsonAsync<JwtToken>();
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization",$"Bearer {bearer.IdToken}");
+                CurrentUser = await _httpClient.GetFromJsonAsync<UserModel>(AccountUrl); 
             }
             return IsAuthenticated; 
         }

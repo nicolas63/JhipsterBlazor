@@ -11,13 +11,22 @@ namespace JhipsterBlazor.Pages
         [Inject]
         public IAuthenticationService AuthenticationService { get; set; }
 
+        [Inject] 
+        public NavigationManager NavigationManager { get; set; }
+
         public LoginModel LoginModel { get; set; } = new LoginModel();
 
         public bool IsAuthenticateError { get; set; }
 
         private async Task HandleSubmit()
         {
-            IsAuthenticateError = !await AuthenticationService.Authenticate(LoginModel); 
+            var result = await AuthenticationService.Authenticate(LoginModel);
+            IsAuthenticateError = !result; 
+            LoginModel = new LoginModel();
+            if (result)
+            {
+                NavigationManager.NavigateTo("/");
+            }
         }
 
 

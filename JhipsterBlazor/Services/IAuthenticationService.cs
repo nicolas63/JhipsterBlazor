@@ -8,5 +8,7 @@ namespace JhipsterBlazor.Services
         public bool IsAuthenticated { get; set; }
 
         Task<bool> Authenticate(LoginModel loginModel);
+
+        public UserModel CurrentUser { get; set; }
     }
 }
