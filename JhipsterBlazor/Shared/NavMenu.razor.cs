@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace JhipsterBlazor.Shared
 {
     public partial class NavMenu
     {
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public AuthenticationStateProvider AuthenticationService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -15,7 +16,7 @@ namespace JhipsterBlazor.Shared
 
         public async Task SignOut()
         {
-            await AuthenticationService.SignOut(); 
+            await (AuthenticationService as IAuthenticationService).SignOut(); 
             NavigationManager.NavigateTo("/");
         }
     }

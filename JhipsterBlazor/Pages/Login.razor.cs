@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace JhipsterBlazor.Pages
 {
     public partial class Login
     {
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public AuthenticationStateProvider AuthenticationService { get; set; }
 
         [Inject] 
         public NavigationManager NavigationManager { get; set; }
@@ -20,7 +21,7 @@ namespace JhipsterBlazor.Pages
 
         private async Task HandleSubmit()
         {
-            var result = await AuthenticationService.SignIn(LoginModel);
+            var result = await (AuthenticationService as IAuthenticationService).SignIn(LoginModel);
             IsAuthenticateError = !result; 
             LoginModel = new LoginModel();
             if (result)

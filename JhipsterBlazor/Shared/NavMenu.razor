@@ -21,28 +21,28 @@
                         <Icon Name='"fa-user"' />
                         Account
                     </BarDropdownToggle>
-                    @if (AuthenticationService.IsAuthenticated)
-                    {
-                        <BarDropdownMenu Class="dropdown-menu">
-                            <BarDropdownItem Class="dropdown-item" @onclick="@SignOut">
-                                <Icon Name='"fa-sign-in-alt"' />
-                                Sign out
-                            </BarDropdownItem>
-                        </BarDropdownMenu>
-                    }
-                    else
-                    {
-                        <BarDropdownMenu Class="dropdown-menu">
-                            <BarDropdownItem Class="dropdown-item" To="login">
-                                <Icon Name='"fa-sign-in-alt"' />
-                                Sign in
-                            </BarDropdownItem>
-                            <BarDropdownItem Class="dropdown-item" To="register">
-                                <Icon Name='"fa-user-plus"' />
-                                Register
-                            </BarDropdownItem>
-                        </BarDropdownMenu>
-                    }
+                    <AuthorizeView>
+                        <Authorized>
+                            <BarDropdownMenu Class="dropdown-menu">
+                                <BarDropdownItem Class="dropdown-item" @onclick="@SignOut">
+                                    <Icon Name='"fa-sign-in-alt"' />
+                                    Sign out
+                                </BarDropdownItem>
+                            </BarDropdownMenu>
+                        </Authorized>
+                        <NotAuthorized>
+                            <BarDropdownMenu Class="dropdown-menu">
+                                <BarDropdownItem Class="dropdown-item" To="login">
+                                    <Icon Name='"fa-sign-in-alt"' />
+                                    Sign in
+                                </BarDropdownItem>
+                                <BarDropdownItem Class="dropdown-item" To="register">
+                                    <Icon Name='"fa-user-plus"' />
+                                    Register
+                                </BarDropdownItem>
+                            </BarDropdownMenu>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </BarDropdown>
             </BarItem>
         </BarEnd>
@@ -50,5 +50,5 @@
 </Bar>
 
 @code {
-   
+
 }

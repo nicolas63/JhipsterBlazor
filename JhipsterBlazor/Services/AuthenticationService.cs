@@ -74,26 +74,33 @@ namespace JhipsterBlazor.Services
         }
 
 
-        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
             if (IsAuthenticated)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier,CurrentUser.Login), 
-                    new Claim(ClaimTypes.Name, CurrentUser.FirstName),
-                    new Claim(ClaimTypes.Email,CurrentUser.Email),
-                    new Claim(ClaimTypes.GivenName,CurrentUser.FirstName),
-                    new Claim(ClaimTypes.Surname,CurrentUser.LastName),
-                    new Claim("langKey",CurrentUser.LangKey),
-                    new Claim("picture",CurrentUser.ImageUrl)
-                };
+                var claims = new List<Claim>();
+                AddClaim(ref claims, ClaimTypes.NameIdentifier, CurrentUser.Login);
+                AddClaim(ref claims, ClaimTypes.Name, CurrentUser.FirstName);
+                AddClaim(ref claims, ClaimTypes.Email, CurrentUser.Email);
+                AddClaim(ref claims, ClaimTypes.GivenName, CurrentUser.FirstName);
+                AddClaim(ref claims, ClaimTypes.Surname, CurrentUser.LastName);
+                AddClaim(ref claims, "langKey", CurrentUser.LangKey);
+                AddClaim(ref claims, "picture", CurrentUser.ImageUrl);
                 claims.AddRange(CurrentUser.Roles?.Select(role => new Claim(ClaimTypes.Role,role)) ?? Array.Empty<Claim>());
-                identity = new ClaimsIdentity(claims);
+                identity = new ClaimsIdentity(claims,"JWT Auth");
             }
 
-            return new AuthenticationState(new ClaimsPrincipal(identity));
+            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
+        }
+
+
+        private void AddClaim(ref List<Claim> claims,string claimType, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                claims.Add(new Claim(claimType,value));
+            }
         }
     }
 }

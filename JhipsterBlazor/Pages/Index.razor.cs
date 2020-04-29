@@ -10,21 +10,8 @@ namespace JhipsterBlazor.Pages
     {
         [Inject]
         public AuthenticationStateProvider AuthenticationService { get; set; }
-
-        [CascadingParameter]
-        Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
+        
         public UserModel CurrentUser => (AuthenticationService as IAuthenticationService)?.CurrentUser;
-
-        protected async override Task OnInitializedAsync()
-        {
-            await AuthenticationStateTask;
-        }
-
-        private void OnCurrentUserChanged()
-        {
-        }
-
-
+        
     }
 }
