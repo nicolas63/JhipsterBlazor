@@ -23,6 +23,7 @@ namespace JhipsterBlazor.Services
 
         public bool IsAuthenticated { get; set; }
         public UserModel CurrentUser { get; set; }
+        public JwtToken JwtToken { get; set; }
         
         public AuthenticationService(HttpClient httpClient, ISyncSessionStorageService sessionStorage)
         {
@@ -35,15 +36,15 @@ namespace JhipsterBlazor.Services
                 SetUserAndAuthorizationHeader(new JwtToken(){IdToken = token}); 
             }
         }
-
+        
         public async Task<bool> SignIn(LoginModel loginModel)
         {
             var result = await _httpClient.PostAsJsonAsync(AuthenticatationUrl, loginModel);
             if (result.IsSuccessStatusCode)
             {
-                var bearer = await result.Content.ReadFromJsonAsync<JwtToken>();
-                _sessionStorage.SetItem(JhiAuthenticationtoken, bearer.IdToken); 
-                await SetUserAndAuthorizationHeader(bearer);
+                JwtToken = await result.Content.ReadFromJsonAsync<JwtToken>();
+                _sessionStorage.SetItem(JhiAuthenticationtoken, JwtToken.IdToken); 
+                await SetUserAndAuthorizationHeader(JwtToken);
             }
             return IsAuthenticated;
         }
@@ -51,6 +52,7 @@ namespace JhipsterBlazor.Services
         public async Task SignOut()
         {
             _httpClient.DefaultRequestHeaders.Remove(AuthorizationHeader);
+            JwtToken = null;
             IsAuthenticated = false;
             CurrentUser = null;
             _sessionStorage.RemoveItem(JhiAuthenticationtoken);
@@ -73,11 +75,10 @@ namespace JhipsterBlazor.Services
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var identity = new ClaimsIdentity();
-            if (IsAuthenticated)
+            if (IsAuthenticated && CurrentUser != null)
             {
                 var claims = new List<Claim>();
                 AddClaim(ref claims, ClaimTypes.NameIdentifier, CurrentUser.Login);

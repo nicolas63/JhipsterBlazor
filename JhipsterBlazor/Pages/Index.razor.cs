@@ -9,9 +9,9 @@ namespace JhipsterBlazor.Pages
     public partial class Index : ComponentBase
     {
         [Inject]
-        public AuthenticationStateProvider AuthenticationService { get; set; }
-        
-        public UserModel CurrentUser => (AuthenticationService as IAuthenticationService)?.CurrentUser;
+        private AuthenticationStateProvider AuthenticationService { get; set; }
+
+        private UserModel CurrentUser => (AuthenticationService as IAuthenticationService)?.CurrentUser;
         
     }
 }
