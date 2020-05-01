@@ -11,10 +11,34 @@
 
         </BarStart>
         <BarEnd>
-            <BarItem Class="nav-link">
-                <Icon Name='"fa-home"' />
-                Home
+            <BarItem>
+                <BarLink To="/">
+                    <Icon Name='"fa-home"' />
+                    Home
+                </BarLink>
             </BarItem>
+            <AuthorizeView>
+                <Authorized>
+                    <BarItem>
+                        <BarDropdown Class="nav-link">
+                            <BarDropdownToggle Class="nav-item dropdown pointer">
+                                <Icon Name='"fa-th-list"' />
+                                Entities
+                            </BarDropdownToggle>
+                            <BarDropdownMenu Class="dropdown-menu">
+                                <BarDropdownItem Class="dropdown-item" To="region">
+                                    <Icon Name='"fa-asterisk"' />
+                                    Region
+                                </BarDropdownItem>
+                                <BarDropdownItem Class="dropdown-item" To="country">
+                                    <Icon Name='"fa-asterisk"' />
+                                    Country
+                                </BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                    </BarItem>
+                </Authorized>
+            </AuthorizeView>
             <BarItem>
                 <BarDropdown>
                     <BarDropdownToggle Class="nav-item dropdown pointer">
