@@ -33,7 +33,8 @@ namespace JhipsterBlazor.Services
             var token = _sessionStorage.GetItem<string>(JhiAuthenticationtoken);
             if (!string.IsNullOrEmpty(token))
             {
-                SetUserAndAuthorizationHeader(new JwtToken(){IdToken = token}); 
+                JwtToken = new JwtToken { IdToken = token };
+                SetUserAndAuthorizationHeader(JwtToken);
             }
         }
         

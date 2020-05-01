@@ -12,6 +12,7 @@ namespace JhipsterBlazor.Pages.Entities
         private ICountryService CountryService { get; set; }
 
         private IList<CountryModel> Countries { get; set; } = new List<CountryModel>();
+
         
         protected override async Task OnInitializedAsync()
         {
