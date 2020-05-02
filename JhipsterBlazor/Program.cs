@@ -5,6 +5,7 @@ using Blazored.SessionStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services;
 using JhipsterBlazor.Services.EntityServices;
 using JhipsterBlazor.Services.EntityServices.Country;
@@ -34,8 +35,11 @@ namespace JhipsterBlazor
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddSingleton<ISessionStorageService, SessionStorageService>().AddSingleton<ISyncSessionStorageService, SessionStorageService>();
             builder.Services.AddSingleton<AuthenticationStateProvider, AuthenticationService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
+
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();
+
             builder.Services.AddAuthorizationCore();
             
             //config =>

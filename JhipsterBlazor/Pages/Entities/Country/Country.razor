@@ -72,25 +72,20 @@
                         </td>
                         <td class="text-right">
                             <div class="btn-group">
-                                <button type="submit"
-                                        [routerLink]="['/country', country.id, 'view']"
-                                        class="btn btn-info btn-sm">
-                                    <fa-icon icon="eye"></fa-icon>
+                                <a href="/country/@country.Id/view" class="btn btn-info btn-sm">
+                                    <Icon Name='"fa-eye"' />
                                     <span class="d-none d-md-inline">View</span>
-                                </button>
+                                </a>
 
-                                <button type="submit"
-                                        [routerLink]="['/country', country.id, 'edit']"
-                                        class="btn btn-primary btn-sm">
-                                    <fa-icon icon="pencil-alt"></fa-icon>
+                                <a href="/country/@country.Id/edit" class="btn btn-primary btn-sm">
+                                    <Icon Name='"fa-pencil-alt"' />
                                     <span class="d-none d-md-inline">Edit</span>
-                                </button>
+                                </a>
 
-                                <button type="submit" (click)="delete(country)"
-                                        class="btn btn-danger btn-sm">
-                                    <fa-icon icon="times"></fa-icon>
+                                <a href="/country/delete/@country.Id" class="btn btn-danger btn-sm">
+                                    <Icon Name='"fa-times"' />
                                     <span class="d-none d-md-inline">Delete</span>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

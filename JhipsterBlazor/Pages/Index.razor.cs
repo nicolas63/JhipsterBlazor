@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using JhipsterBlazor.Models;
+using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
