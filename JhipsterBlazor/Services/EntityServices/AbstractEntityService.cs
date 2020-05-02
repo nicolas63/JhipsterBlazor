@@ -36,5 +36,17 @@ namespace JhipsterBlazor.Services.EntityServices
             return await _httpClient.GetFromJsonAsync<IList<T>>(BaseUrl);
         }
 
+        public async Task<T> Get(string id)
+        {
+            //todo catch error like auth error
+            return await _httpClient.GetFromJsonAsync<T>($"{BaseUrl}/{id}");
+        }
+
+        public async Task Add(T model)
+        {
+            //todo catch error like auth error
+            await _httpClient.PostAsJsonAsync(BaseUrl,model);
+        }
+
     }
 }

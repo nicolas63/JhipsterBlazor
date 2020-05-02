@@ -7,6 +7,8 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using JhipsterBlazor.Services;
 using JhipsterBlazor.Services.EntityServices;
+using JhipsterBlazor.Services.EntityServices.Country;
+using JhipsterBlazor.Services.EntityServices.Region;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +35,7 @@ namespace JhipsterBlazor
             builder.Services.AddSingleton<ISessionStorageService, SessionStorageService>().AddSingleton<ISyncSessionStorageService, SessionStorageService>();
             builder.Services.AddSingleton<AuthenticationStateProvider, AuthenticationService>();
             builder.Services.AddSingleton<ICountryService, CountryService>();
+            builder.Services.AddSingleton<IRegionService, RegionService>();
             builder.Services.AddAuthorizationCore();
             
             //config =>

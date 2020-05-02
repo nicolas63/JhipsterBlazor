@@ -2,7 +2,7 @@
 using JhipsterBlazor.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace JhipsterBlazor.Services.EntityServices
+namespace JhipsterBlazor.Services.EntityServices.Country
 {
     public class CountryService : AbstractEntityService<CountryModel>,ICountryService
     {
