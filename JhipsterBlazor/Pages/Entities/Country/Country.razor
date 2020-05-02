@@ -60,7 +60,7 @@
                 @foreach (var country in Countries)
                 {
                     <tr>
-                        <td><a href="/country/@country.Id">@country.Id</a></td>
+                        <td><a href="/country/@country.Id/view">@country.Id</a></td>
                         <td>@country.CountryName</td>
                         <td>
                             @if (country.Region != null)

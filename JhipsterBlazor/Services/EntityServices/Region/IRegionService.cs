@@ -11,5 +11,7 @@ namespace JhipsterBlazor.Services.EntityServices.Region
         public Task<RegionModel> Get(string id);
 
         public Task Add(RegionModel model);
+
+        Task Update(RegionModel model); 
     }
 }

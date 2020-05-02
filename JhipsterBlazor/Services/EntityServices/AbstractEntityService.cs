@@ -47,6 +47,11 @@ namespace JhipsterBlazor.Services.EntityServices
             //todo catch error like auth error
             await _httpClient.PostAsJsonAsync(BaseUrl,model);
         }
+        public async Task Update(T model)
+        {
+            //todo catch error like auth error
+            await _httpClient.PutAsJsonAsync(BaseUrl, model);
+        }
 
     }
 }

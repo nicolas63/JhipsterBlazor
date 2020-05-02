@@ -28,14 +28,12 @@
                 </dl>
 
                 <button @onclick="Back" class="btn btn-info">
-                    <Icon Name='"arrow-left"' />&nbsp;<span>Back</span>
+                    <Icon Name='"fa-arrow-left"' />&nbsp;<span>Back</span>
                 </button>
 
-                <button type="button"
-                        [routerLink]="['/country', country.id, 'edit']"
-                        class="btn btn-primary">
-                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-                </button>
+                <a href="/country/@Country.Id/edit" class="btn btn-primary">
+                    <Icon Name='"fa-pencil-alt"' />&nbsp;<span>Edit</span>
+                </a>
             </div>
         }
     </div>

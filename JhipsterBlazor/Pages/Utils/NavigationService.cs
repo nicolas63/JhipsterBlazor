@@ -35,7 +35,5 @@ namespace JhipsterBlazor.Pages.Utils
         {
             PreviousStack.Push(e.Location);
         }
-
-
     }
 }

@@ -11,5 +11,7 @@ namespace JhipsterBlazor.Services.EntityServices.Country
         public Task<CountryModel> Get(string id);
 
         public Task Add(CountryModel model);
+
+        Task Update(CountryModel model);
     }
 }
