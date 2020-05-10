@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Blazored.Modal;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
@@ -11,9 +11,9 @@ namespace JhipsterBlazor.Pages
     {
         [Inject]
         public AuthenticationStateProvider AuthenticationService { get; set; }
-
-        [Inject] 
-        public NavigationManager NavigationManager { get; set; }
+        
+        [CascadingParameter] 
+        BlazoredModalInstance BlazoredModal { get; set; }
 
         public LoginModel LoginModel { get; set; } = new LoginModel();
 
@@ -26,11 +26,8 @@ namespace JhipsterBlazor.Pages
             LoginModel = new LoginModel();
             if (result)
             {
-                NavigationManager.NavigateTo("/");
+                BlazoredModal.Close();
             }
         }
-
-
-
     }
 }

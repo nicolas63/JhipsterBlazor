@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Blazorise;
+using Blazored.Modal.Services;
+using JhipsterBlazor.Pages;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -13,8 +14,16 @@ namespace JhipsterBlazor.Shared
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
-        
-        public async Task SignOut()
+
+        [Inject]
+        private IModalService ModalService { get; set; }
+
+        private async Task SignIn()
+        {
+            ModalService.Show<Login>("Sign In");
+        }
+
+        private async Task SignOut()
         {
             await (AuthenticationService as IAuthenticationService).SignOut(); 
             NavigationManager.NavigateTo("/");

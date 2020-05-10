@@ -1,13 +1,13 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.Modal;
 using Blazored.SessionStorage;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services;
-using JhipsterBlazor.Services.EntityServices;
 using JhipsterBlazor.Services.EntityServices.Country;
 using JhipsterBlazor.Services.EntityServices.Region;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -33,7 +33,10 @@ namespace JhipsterBlazor
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            
             builder.Services.AddSingleton<ISessionStorageService, SessionStorageService>().AddSingleton<ISyncSessionStorageService, SessionStorageService>();
+            builder.Services.AddBlazoredModal();
+
             builder.Services.AddSingleton<AuthenticationStateProvider, AuthenticationService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
