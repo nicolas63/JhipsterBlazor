@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Blazorise;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -18,5 +19,6 @@ namespace JhipsterBlazor.Shared
             await (AuthenticationService as IAuthenticationService).SignOut(); 
             NavigationManager.NavigateTo("/");
         }
+        
     }
 }
