@@ -82,10 +82,10 @@
                                     <span class="d-none d-md-inline">Edit</span>
                                 </a>
 
-                                <a href="/country/delete/@country.Id" class="btn btn-danger btn-sm">
+                                <button @onclick="() => Delete(country.Id)" class="btn btn-danger btn-sm">
                                     <Icon Name='"fa-times"' />
                                     <span class="d-none d-md-inline">Delete</span>
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>

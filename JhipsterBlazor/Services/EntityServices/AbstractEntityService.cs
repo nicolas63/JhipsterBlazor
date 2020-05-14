@@ -53,5 +53,11 @@ namespace JhipsterBlazor.Services.EntityServices
             await _httpClient.PutAsJsonAsync(BaseUrl, model);
         }
 
+        public async Task Delete(string id)
+        {
+            //todo catch error like auth error
+            await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
+        }
+
     }
 }
