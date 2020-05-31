@@ -8,6 +8,7 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services;
+using JhipsterBlazor.Services.AccountServices;
 using JhipsterBlazor.Services.EntityServices.Country;
 using JhipsterBlazor.Services.EntityServices.Region;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -42,6 +43,7 @@ namespace JhipsterBlazor
 
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();
+            builder.Services.AddSingleton<IRegisterService, RegisterService>();
 
             builder.Services.AddAuthorizationCore();
             
