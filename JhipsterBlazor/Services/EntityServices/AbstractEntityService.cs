@@ -11,7 +11,7 @@ namespace JhipsterBlazor.Services.EntityServices
     public class AbstractEntityService<T> where T : class
     {
         private const string AuthorizationHeader = "Authorization";
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         protected JwtToken JwtToken { get; set; }
         protected string BaseUrl { get; }
@@ -30,30 +30,30 @@ namespace JhipsterBlazor.Services.EntityServices
             BaseUrl = baseUrl;
         }
 
-        public async Task<IList<T>> GetAll()
+        public virtual async Task<IList<T>> GetAll()
         {
             //todo catch error like auth error
             return await _httpClient.GetFromJsonAsync<IList<T>>(BaseUrl);
         }
 
-        public async Task<T> Get(string id)
+        public virtual async Task<T> Get(string id)
         {
             //todo catch error like auth error
             return await _httpClient.GetFromJsonAsync<T>($"{BaseUrl}/{id}");
         }
 
-        public async Task Add(T model)
+        public virtual async Task Add(T model)
         {
             //todo catch error like auth error
             await _httpClient.PostAsJsonAsync(BaseUrl,model);
         }
-        public async Task Update(T model)
+        public virtual async Task Update(T model)
         {
             //todo catch error like auth error
             await _httpClient.PutAsJsonAsync(BaseUrl, model);
         }
 
-        public async Task Delete(string id)
+        public virtual async Task Delete(string id)
         {
             //todo catch error like auth error
             await _httpClient.DeleteAsync($"{BaseUrl}/{id}");

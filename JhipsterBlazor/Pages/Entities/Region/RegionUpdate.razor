@@ -14,14 +14,14 @@
                     @if(Id != 0){
                         <div class="form-group">
                             <label for="id">ID</label>
-                            <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly @bind-value="@RegionModel.Id" />
+                            <input type="text" class="form-control" id="id" name="id" readonly @bind-value="@RegionModel.Id" />
                         </div>
                     }
 
                     <div class="form-group">
                         <label class="form-control-label" for="field_regionName">Region Name</label>
                         <input type="text" class="form-control" name="regionName" id="field_regionName"
-                               formControlName="regionName" @bind-value="@RegionModel.RegionName" />
+                              @bind-value="@RegionModel.RegionName" />
                     </div>
                 </div>
 

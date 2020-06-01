@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Blazored.Modal.Services;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services;
 using JhipsterBlazor.Services.EntityServices.User;
+using JhipsterBlazor.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -11,6 +14,9 @@ namespace JhipsterBlazor.Pages.Admin.UserManagement
     public partial class UserManagement
     {
         private IList<UserModel> UserModels { get; set; }
+
+        [Inject]
+        private IModalService ModalService { get; set; }
 
         [Inject]
         private IUserService UserService { get; set; }
@@ -24,20 +30,22 @@ namespace JhipsterBlazor.Pages.Admin.UserManagement
         {
             UserModels = await UserService.GetAll();
         }
-
-        public async Task CreateUser()
+        
+        private async Task ActiveUser(UserModel user, bool activated)
         {
-
+            user.Activated = activated;
+            await UserService.Update(user); 
         }
 
-        private async Task ActiveUser(UserModel user, bool activate)
+        private async Task DeleteUser(string login)
         {
-
-        }
-
-        private async Task DeleteUser(UserModel user)
-        {
-
+            var deleteModal = ModalService.Show<DeleteModal>("Confirm delete operation");
+            var deleteResult = await deleteModal.Result;
+            if (!deleteResult.Cancelled)
+            {
+                await UserService.Delete(login);
+                UserModels.Remove(UserModels.First(user => user.Login.Equals(login)));
+            }
         }
     }
 }

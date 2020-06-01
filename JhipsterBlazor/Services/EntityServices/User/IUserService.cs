@@ -15,5 +15,9 @@ namespace JhipsterBlazor.Services.EntityServices.User
         public Task Add(UserModel model);
 
         Task Update(UserModel model);
+
+        Task Delete(string id);
+
+        Task<IEnumerable<string>> GetAllAuthorities(); 
     }
 }

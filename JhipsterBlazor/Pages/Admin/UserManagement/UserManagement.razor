@@ -4,10 +4,10 @@
     <h2>
         <span id="user-management-page-heading">Users</span>
 
-        <button class="btn btn-primary float-right jh-create-entity" @onclick="CreateUser">
+        <a class="btn btn-primary float-right jh-create-entity" href="/admin/user-management/new">
             <Icon Name='"fa-plus"' />
             <span>Create a new User</span>
-        </button>
+        </a>
     </h2>
 
     @*<jhi-alert-error></jhi-alert-error>*@
@@ -69,20 +69,20 @@
                                     </div>
                                 }
                             </td>
-                            <td>@user.CreatedDate</td>
+                            <td>@($"{user.CreatedDate:dd/MM/yy HH:mm}")</td>
                             <td>@user.LastModifiedBy</td>
-                            <td>@user.LastModifiedDate</td>
+                            <td>@($"{user.LastModifiedDate:dd/MM/yy HH:mm}")</td>
                             <td class="text-right">
                                 <div class="btn-group">
                                     <a type="submit"
-                                       href="/user-management/@user.Login/view"
+                                       href="/admin/user-management/@user.Login/view"
                                        class="btn btn-info btn-sm">
                                         <Icon Name='"fa-eye"' />
                                         <span class="d-none d-md-inline">View</span>
                                     </a>
 
                                     <a type="submit"
-                                       href="/user-management/@user.Login/edit"
+                                       href="/admin/user-management/@user.Login/edit"
                                        class="btn btn-primary btn-sm">
                                         <Icon Name='"fa-pencil-alt"' />
                                         <span class="d-none d-md-inline">Edit</span>
@@ -90,7 +90,7 @@
 
                                     @if (AuthenticationService.CurrentUser.Login == user.Login)
                                     {
-                                        <button type="button" @onclick=@(() => DeleteUser(user)) disabled
+                                        <button type="button" @onclick=@(() => DeleteUser(user.Login)) disabled
                                            class="btn btn-danger btn-sm"> 
                                             <Icon Name='"fa-times"' />
                                             <span class="d-none d-md-inline">Delete</span>
@@ -98,7 +98,7 @@
                                     }
                                     else
                                     {
-                                        <button type="button" @onclick=@(() => DeleteUser(user))
+                                        <button type="button" @onclick=@(() => DeleteUser(user.Login))
                                            class="btn btn-danger btn-sm">
                                             <Icon Name='"fa-times"' />
                                             <span class="d-none d-md-inline">Delete</span>
