@@ -10,6 +10,7 @@ using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services;
 using JhipsterBlazor.Services.EntityServices.Country;
 using JhipsterBlazor.Services.EntityServices.Region;
+using JhipsterBlazor.Services.EntityServices.User;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,8 @@ namespace JhipsterBlazor
 
             builder.Services.AddSingleton<AuthenticationStateProvider, AuthenticationService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            
+            builder.Services.AddSingleton<IUserService, UserService>();
 
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();

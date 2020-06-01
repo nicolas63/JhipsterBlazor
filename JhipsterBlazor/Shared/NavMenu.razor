@@ -35,6 +35,20 @@
                             </BarDropdownMenu>
                         </BarDropdown>
                     </BarItem>
+                    <BarItem>
+                        <BarDropdown>
+                            <BarDropdownToggle Class="nav-item dropdown pointer">
+                                <Icon Name='"fa-user-plus"' />
+                                Administration
+                            </BarDropdownToggle>
+                            <BarDropdownMenu Class="dropdown-menu">
+                                <BarDropdownItem Class="dropdown-item"  @onclick="@UserManagement">
+                                    <Icon Name='"fa-user"' />
+                                    User management
+                                </BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                    </BarItem>
                 </Authorized>
             </AuthorizeView>
             <BarItem>

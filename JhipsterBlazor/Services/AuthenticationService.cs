@@ -89,7 +89,7 @@ namespace JhipsterBlazor.Services
                 AddClaim(ref claims, ClaimTypes.Surname, CurrentUser.LastName);
                 AddClaim(ref claims, "langKey", CurrentUser.LangKey);
                 AddClaim(ref claims, "picture", CurrentUser.ImageUrl);
-                claims.AddRange(CurrentUser.Roles?.Select(role => new Claim(ClaimTypes.Role,role)) ?? Array.Empty<Claim>());
+                claims.AddRange(CurrentUser.Authorities?.Select(role => new Claim(ClaimTypes.Role,role)) ?? Array.Empty<Claim>());
                 identity = new ClaimsIdentity(claims,"JWT Auth");
             }
 
