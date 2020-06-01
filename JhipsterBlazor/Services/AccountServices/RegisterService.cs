@@ -20,10 +20,9 @@ namespace JhipsterBlazor.Services.AccountServices
             _httpClient.BaseAddress = new Uri(Configuration.BaseUri);
         }
 
-        public async Task<bool> Save(UserSaveModel registerModel)
+        public async Task<HttpResponseMessage> Save(UserSaveModel registerModel)
         {
-            var result = await _httpClient.PostAsJsonAsync(RegisterUrl, registerModel);
-            return result.IsSuccessStatusCode;
+            return await _httpClient.PostAsJsonAsync(RegisterUrl, registerModel);
         }
     }
 }

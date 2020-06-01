@@ -4,7 +4,39 @@
     <div>
         <div>
             <div class="row justify-content-center">
-                
+                <div class="col-md-8">
+                    <h1>Registration</h1>
+                    @if (Success)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Registration saved!</strong> Please check your email for confirmation.
+                        </div>
+                    }
+                    @if (Error)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Registration failed!</strong> Please try again later.
+                        </div>
+                    }
+                    @if (ErrorUserExists)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Login name already registered!</strong> Please choose another one.
+                        </div>
+                    }
+                    @if (ErrorEmailExists)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Email is already in use!</strong> Please choose another one.
+                        </div>
+                    }
+                    @if (DoNotMatch)
+                    {
+                        <div class="alert alert-danger">
+                            The password and its confirmation do not match!
+                        </div>
+                    }
+                </div>
             </div>
 
             <div class="row justify-content-center">
@@ -49,7 +81,7 @@
 
                     <div class="mt-3 alert alert-warning">
                         <span>If you want to </span>
-                        <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and password="user").</span>
+                        <a class="alert-link" @onclick="@SignIn">sign in</a><span>, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and password="user").</span>
                     </div>
                 </div>
             </div>
