@@ -72,7 +72,7 @@ namespace JhipsterBlazor.Pages.Account
             }
             ErrorEmailExists = typeString == ErrorConst.EmailAlreadyUsedType;
             ErrorUserExists = typeString == ErrorConst.LoginAlreadyUsedType;
-            if (!ErrorEmailExists && !ErrorUserExists) // if error unknown
+            if (!ErrorEmailExists && !ErrorUserExists) // if unknown error
             {
                 Error = true;
             }

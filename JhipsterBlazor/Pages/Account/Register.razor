@@ -41,21 +41,26 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <EditForm Model="@RegisterModel" OnValidSubmit="@HandleSubmit">
+                    <EditForm Model="@RegisterModel" OnValidSubmit="@HandleSubmit" >
+                        <DataAnnotationsValidator />
                         <div class="form-group">
                             <label class="form-control-label" for="login">Username</label>
-                            <input type="text" class="form-control" id="login" name="login" placeholder="Your username"
-                                   @bind-value="@RegisterModel.Username">
+                            <InputText id="login" @bind-Value="RegisterModel.Username" class="form-control"/>
+                            <div class="form-text text-danger">
+                                <ValidationMessage  For="@(() => RegisterModel.Username)" />
+                            </div>
 
-                            
+
+
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Your email"
-                                   @bind-value="@RegisterModel.Email">
+                            <InputText id="email" @bind-Value="RegisterModel.Email" class="form-control" />
+                                       <div class="form-text text-danger">
+                                           <ValidationMessage For="@(() => RegisterModel.Email)" />
+                                       </div>
 
-                            
                         </div>
 
                         <div class="form-group">
@@ -63,9 +68,9 @@
                             <input type="password" class="form-control" id="password" name="password" placeholder="New password"
                                    @bind-value="@RegisterModel.Password">
 
-                           
 
-                        
+
+
                         </div>
 
                         <div class="form-group">
@@ -73,7 +78,7 @@
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
                                    @bind-value="@RegisterModel.ConfirmPassword">
 
-                            
+
                         </div>
 
                         <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Register</button>
