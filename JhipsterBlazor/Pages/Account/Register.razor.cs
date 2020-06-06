@@ -8,6 +8,7 @@ using JhipsterBlazor.Models;
 using JhipsterBlazor.Services.AccountServices;
 using JhipsterBlazor.Shared.Constants;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Newtonsoft.Json.Linq;
 
 namespace JhipsterBlazor.Pages.Account
@@ -22,6 +23,8 @@ namespace JhipsterBlazor.Pages.Account
 
         private RegisterModel RegisterModel = new RegisterModel();
 
+        private EditContext EditContext { get; set; }
+
         private bool Success { get; set; }
         private bool Error { get; set; }
         private bool DoNotMatch { get; set; }
@@ -29,12 +32,23 @@ namespace JhipsterBlazor.Pages.Account
         private bool ErrorUserExists { get; set; }
 
 
+
         protected override async Task OnInitializedAsync()
         {
+            EditContext = new EditContext(RegisterModel);
+            /*EditContext.OnFieldChanged += (s, e) =>
+            {
+                EditContext.NotifyValidationStateChanged();
+            };*/
         }
 
         private async Task HandleSubmit()
         {
+            if (!RegisterModel.Password.Equals(RegisterModel.ConfirmPassword))
+            {
+                DoNotMatch = true;
+                return;
+            }
             SetAllErrorFalse();
             var result = await RegisterService.Save(new UserSaveModel{
                 Email = RegisterModel.Email,

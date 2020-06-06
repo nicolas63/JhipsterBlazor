@@ -41,7 +41,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <EditForm Model="@RegisterModel" OnValidSubmit="@HandleSubmit" >
+                    <EditForm EditContext="@EditContext" OnValidSubmit="@HandleSubmit" >
                         <DataAnnotationsValidator />
                         <div class="form-group">
                             <label class="form-control-label" for="login">Username</label>
@@ -67,7 +67,9 @@
                             <label class="form-control-label" for="password">New password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="New password"
                                    @bind-value="@RegisterModel.Password">
-
+                            <div class="form-text text-danger">
+                                <ValidationMessage For="@(() => RegisterModel.Password)" />
+                            </div>
 
 
 
@@ -77,7 +79,9 @@
                             <label class="form-control-label" for="confirmPassword">New password confirmation</label>
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
                                    @bind-value="@RegisterModel.ConfirmPassword">
-
+                            <div class="form-text text-danger">
+                                <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" />
+                            </div>
 
                         </div>
 
