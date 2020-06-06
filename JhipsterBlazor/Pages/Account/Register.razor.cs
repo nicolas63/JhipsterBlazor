@@ -23,8 +23,6 @@ namespace JhipsterBlazor.Pages.Account
 
         private RegisterModel RegisterModel = new RegisterModel();
 
-        private EditContext EditContext { get; set; }
-
         private bool Success { get; set; }
         private bool Error { get; set; }
         private bool DoNotMatch { get; set; }
@@ -35,11 +33,6 @@ namespace JhipsterBlazor.Pages.Account
 
         protected override async Task OnInitializedAsync()
         {
-            EditContext = new EditContext(RegisterModel);
-            /*EditContext.OnFieldChanged += (s, e) =>
-            {
-                EditContext.NotifyValidationStateChanged();
-            };*/
         }
 
         private async Task HandleSubmit()

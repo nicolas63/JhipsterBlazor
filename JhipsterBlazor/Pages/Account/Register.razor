@@ -1,5 +1,6 @@
 @page "/register"
 @using JhipsterBlazor.Models
+@using JhipsterBlazor.Shared.Components
 
     <div>
         <div>
@@ -41,11 +42,11 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <EditForm EditContext="@EditContext" OnValidSubmit="@HandleSubmit" >
+                    <EditForm  Model="@RegisterModel" OnValidSubmit="@HandleSubmit" >
                         <DataAnnotationsValidator />
                         <div class="form-group">
                             <label class="form-control-label" for="login">Username</label>
-                            <InputText id="login" @bind-Value="RegisterModel.Username" class="form-control"/>
+                            <DynInputText id="login" @bind-Value="RegisterModel.Username" class="form-control" placeholder="Username" />
                             <div class="form-text text-danger">
                                 <ValidationMessage  For="@(() => RegisterModel.Username)" />
                             </div>
@@ -56,7 +57,7 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="email">Email</label>
-                            <InputText id="email" @bind-Value="RegisterModel.Email" class="form-control" />
+                            <DynInputText id="email" @bind-Value="RegisterModel.Email" type="email" class="form-control" placeholder="Email"/>
                                        <div class="form-text text-danger">
                                            <ValidationMessage For="@(() => RegisterModel.Email)" />
                                        </div>
@@ -65,8 +66,7 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="password">New password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="New password"
-                                   @bind-value="@RegisterModel.Password">
+                            <DynInputText id="password" @bind-Value="RegisterModel.Password" type="password" class="form-control" placeholder="New password"/>
                             <div class="form-text text-danger">
                                 <ValidationMessage For="@(() => RegisterModel.Password)" />
                             </div>
@@ -77,8 +77,7 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="confirmPassword">New password confirmation</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
-                                   @bind-value="@RegisterModel.ConfirmPassword">
+                            <DynInputText id="confirmPassword" @bind-Value="RegisterModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
                             <div class="form-text text-danger">
                                 <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" />
                             </div>
