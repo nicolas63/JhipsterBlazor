@@ -37,12 +37,12 @@ namespace JhipsterBlazor.Pages.Account
 
         private async Task HandleSubmit()
         {
+            SetAllErrorFalse();
             if (!RegisterModel.Password.Equals(RegisterModel.ConfirmPassword))
             {
                 DoNotMatch = true;
                 return;
             }
-            SetAllErrorFalse();
             var result = await RegisterService.Save(new UserSaveModel{
                 Email = RegisterModel.Email,
                 Login = RegisterModel.Username,
