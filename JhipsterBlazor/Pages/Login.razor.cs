@@ -13,7 +13,7 @@ namespace JhipsterBlazor.Pages
         public AuthenticationStateProvider AuthenticationService { get; set; }
         
         [CascadingParameter] 
-        BlazoredModalInstance BlazoredModal { get; set; }
+        public BlazoredModalInstance BlazoredModal { get; set; }
 
         public LoginModel LoginModel { get; set; } = new LoginModel();
 

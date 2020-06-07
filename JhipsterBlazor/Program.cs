@@ -42,6 +42,7 @@ namespace JhipsterBlazor
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IAlertService, AlertService>();
 
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();

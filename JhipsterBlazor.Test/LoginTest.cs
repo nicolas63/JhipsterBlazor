@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.Modal;
 using Xunit;
 using Bunit;
 using Bunit.Mocking.JSInterop;
+using FluentAssertions;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Pages;
 using JhipsterBlazor.Services;
@@ -69,6 +71,7 @@ namespace JhipsterBlazor.Test
             login.Find("form").Submit();
 
             // Assert
+            login.Instance.IsAuthenticateError.Should().BeTrue();
             login.Find("div").Children.First().MarkupMatches(
                 @"<div class=""col-md-8"">
                     <div class=""alert alert-danger"">
