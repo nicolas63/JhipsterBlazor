@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Blazored.Modal.Services;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services.AccountServices;
-using JhipsterBlazor.Shared.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Newtonsoft.Json.Linq;
+using System.Net.Http.Json;
+using Blazorise;
+using SharedModel.Constants;
 
 namespace JhipsterBlazor.Pages.Account
 {
@@ -23,16 +24,26 @@ namespace JhipsterBlazor.Pages.Account
 
         private RegisterModel RegisterModel = new RegisterModel();
 
+        private EditForm editForm;
+
         private bool Success { get; set; }
         private bool Error { get; set; }
         private bool DoNotMatch { get; set; }
         private bool ErrorEmailExists { get; set; }
         private bool ErrorUserExists { get; set; }
 
-
+        void Validate(ValidatorEventArgs e, string textError)
+        {
+            e.ErrorText = "superTest";
+            if(e.Value != null)
+            {
+                e.Status = Convert.ToString(e.Value)?.Length >= 6 ? ValidationStatus.Success : ValidationStatus.Error;
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
         }
 
         private async Task HandleSubmit()
@@ -70,19 +81,27 @@ namespace JhipsterBlazor.Pages.Account
 
         private async Task ProcessError(HttpResponseMessage result)
         {
-            JObject errorResultJson = JObject.Parse(await result.Content.ReadAsStringAsync());
-            string typeString = errorResultJson.GetValue("type").Value<string>();
-            if (result.StatusCode != HttpStatusCode.BadRequest || typeString == null) // json pars error or other status code
+            if (result.StatusCode != HttpStatusCode.BadRequest) // other status code
             {
                 Error = true;
                 return;
             }
-            ErrorEmailExists = typeString == ErrorConst.EmailAlreadyUsedType;
-            ErrorUserExists = typeString == ErrorConst.LoginAlreadyUsedType;
-            if (!ErrorEmailExists && !ErrorUserExists) // if unknown error
+
+            try
             {
-                Error = true;
+                var res = await result.Content.ReadFromJsonAsync<RegisterResultRequest>();
+                ErrorEmailExists = res.Type == ErrorConst.EmailAlreadyUsedType;
+                ErrorUserExists = res.Type == ErrorConst.LoginAlreadyUsedType;
+                if (!ErrorEmailExists && !ErrorUserExists) // if unknown error
+                {
+                    Error = true;
+                }
             }
+            catch (Exception)
+            {
+                Error = true; // json pars error
+            }
+            
         }
 
         private async Task SignIn()

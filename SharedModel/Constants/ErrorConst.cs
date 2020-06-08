@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace JhipsterBlazor.Shared.Constants
+namespace SharedModel.Constants
 {
     public static class ErrorConst
     {

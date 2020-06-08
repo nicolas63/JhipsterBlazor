@@ -7,7 +7,7 @@ using JhipsterBlazor.Models;
 
 namespace JhipsterBlazor.Services.AccountServices
 {
-    interface IRegisterService
+    public interface IRegisterService
     {
         Task<HttpResponseMessage> Save(UserSaveModel registerModel);
     }
