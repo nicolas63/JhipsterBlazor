@@ -5,6 +5,7 @@ namespace JhipsterBlazor.Models
 {
     public class UserModel
     {
+        public string Id { get; set; }
         public string Login { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,6 +17,6 @@ namespace JhipsterBlazor.Models
         public DateTime? CreatedDate { get; set; }
         public string LastModifiedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
-        public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<string> Authorities { get; set; }
     }
 }

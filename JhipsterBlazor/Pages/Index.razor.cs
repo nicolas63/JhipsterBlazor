@@ -13,7 +13,7 @@ namespace JhipsterBlazor.Pages
         private AuthenticationStateProvider AuthenticationService { get; set; }
 
         [Inject]
-        private IModalService ModalService { get; set; }
+        public IModalService ModalService { get; set; }
 
         private UserModel CurrentUser => (AuthenticationService as IAuthenticationService)?.CurrentUser;
 

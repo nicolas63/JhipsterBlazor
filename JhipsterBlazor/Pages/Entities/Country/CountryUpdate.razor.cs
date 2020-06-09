@@ -14,14 +14,14 @@ namespace JhipsterBlazor.Pages.Entities.Country
         [Parameter]
         public int Id { get; set; }
         
-        [Inject] 
-        public ICountryService CountryService { get; set; }
+        [Inject]
+        private ICountryService CountryService { get; set; }
 
         [Inject]
-        public IRegionService RegionService { get; set; }
+        private IRegionService RegionService { get; set; }
 
         [Inject]
-        public INavigationService NavigationService { get; set; }
+        private INavigationService NavigationService { get; set; }
 
         public CountryModel CountryModel { get; set; } = new CountryModel();
 

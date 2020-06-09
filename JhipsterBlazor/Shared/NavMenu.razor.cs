@@ -28,6 +28,11 @@ namespace JhipsterBlazor.Shared
             await (AuthenticationService as IAuthenticationService).SignOut(); 
             NavigationManager.NavigateTo("/");
         }
-        
+
+        private void UserManagement()
+        {
+            NavigationManager.NavigateTo("/admin/user-management");
+        }
+
     }
 }
