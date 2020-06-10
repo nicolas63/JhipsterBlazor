@@ -22,15 +22,15 @@ namespace JhipsterBlazor.Pages.Account
         [Inject]
         private IModalService ModalService { get; set; }
 
-        private RegisterModel RegisterModel = new RegisterModel();
+        public RegisterModel RegisterModel = new RegisterModel();
 
         private EditForm editForm;
 
-        private bool Success { get; set; }
-        private bool Error { get; set; }
-        private bool DoNotMatch { get; set; }
-        private bool ErrorEmailExists { get; set; }
-        private bool ErrorUserExists { get; set; }
+        public bool Success { get; private set; }
+        public bool Error { get; private set; }
+        public bool DoNotMatch { get; private set; }
+        public bool ErrorEmailExists { get; private set; }
+        public bool ErrorUserExists { get; private set; }
 
         void Validate(ValidatorEventArgs e, string textError)
         {
