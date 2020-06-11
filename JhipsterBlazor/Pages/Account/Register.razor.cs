@@ -32,15 +32,6 @@ namespace JhipsterBlazor.Pages.Account
         public bool ErrorEmailExists { get; private set; }
         public bool ErrorUserExists { get; private set; }
 
-        void Validate(ValidatorEventArgs e, string textError)
-        {
-            e.ErrorText = "superTest";
-            if(e.Value != null)
-            {
-                e.Status = Convert.ToString(e.Value)?.Length >= 6 ? ValidationStatus.Success : ValidationStatus.Error;
-            }
-        }
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();

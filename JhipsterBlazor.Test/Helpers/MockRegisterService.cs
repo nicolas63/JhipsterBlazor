@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services.AccountServices;
 using SharedModel.Constants;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace JhipsterBlazor.Test.Helpers
 {
@@ -14,6 +16,13 @@ namespace JhipsterBlazor.Test.Helpers
     {
         public virtual Task<HttpResponseMessage> Save(UserSaveModel registerModel)
         {
+            var resultMsg = new RegisterResultRequest();
+            resultMsg.Detail = "";
+            resultMsg.Params = "";
+            resultMsg.Status = 400;
+            resultMsg.Params = "";
+            resultMsg.TraceId = "";
+            resultMsg.Type = "";
             if (registerModel.Login == "testSuccess")
             {
                 return Task.Run(() => new HttpResponseMessage()
@@ -23,29 +32,21 @@ namespace JhipsterBlazor.Test.Helpers
                 });
             }
 
-            /*if (registerModel.Login == "testEmail")
+            if (registerModel.Login == "testEmail")
             {
-                return Task.Run(() => new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    Content = new StringContent(ErrorConst.EmailAlreadyUsedType)
-                });
+                resultMsg.Type = ErrorConst.EmailAlreadyUsedType;
             }
 
             if (registerModel.Login == "testLogin")
             {
-                return Task.Run(() => new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    Content = new StringContent(ErrorConst.LoginAlreadyUsedType)
-                });
-            }*/
+                resultMsg.Type = ErrorConst.LoginAlreadyUsedType;
+            }
+
             return Task.Run(() => new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                Content = new StringContent("")
+                Content = new StringContent(JsonSerializer.Serialize(resultMsg), Encoding.UTF8, "application/json")
             });
-
 
         }
     }

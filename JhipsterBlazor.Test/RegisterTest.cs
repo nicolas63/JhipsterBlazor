@@ -33,18 +33,7 @@ namespace JhipsterBlazor.Test
         public void Should_CallSaveInMethod_When_RegisterFormIsSubmit()
         {
             // Arrange
-            Services.AddSingleton<IRegisterService ,MockRegisterService>();
-
-            var modalService = new Mock<IModalService>();
-            Services.AddSingleton<IModalService>(modalService.Object);
-
-            var register = RenderComponent<Register>();
-
-            register.Instance.RegisterModel.Username = "testSuccess";
-            register.Instance.RegisterModel.Email = "testSuccess@testSuccess.testSuccess";
-            register.Instance.RegisterModel.Password = "testSuccess";
-            register.Instance.RegisterModel.ConfirmPassword = "testSuccess";
-
+            var register = InitTestRegister("testSuccess", "testSuccess@testSuccess.testSuccess", "testSuccess", "testSuccess");
 
             // Act
             var test = register.Find("form");
@@ -64,24 +53,7 @@ namespace JhipsterBlazor.Test
         public void Should_Error_When_RegisterFormIsSubmit()
         {
             // Arrange
-            Services.AddSingleton<IRegisterService, MockRegisterService>();
-
-            var modalService = new Mock<IModalService>();
-            Services.AddSingleton<IModalService>(modalService.Object);
-
-            var register = RenderComponent<Register>();
-
-            register.Instance.RegisterModel.Username = "test";
-            register.Instance.RegisterModel.Email = "test@test.tests";
-            register.Instance.RegisterModel.Password = "testtest";
-            register.Instance.RegisterModel.ConfirmPassword = "testtest";
-
-
-            // Act
-            var test = register.Find("form");
-            test.Submit();
-
-            Thread.Sleep(1000); //wait register handleSubmit
+            var register = InitTestRegister("test", "test@test.tests", "testtest", "testtest");
 
             // Assert
             register.Instance.Success.Should().BeFalse();
@@ -89,6 +61,71 @@ namespace JhipsterBlazor.Test
                 @"<div class=""alert alert-danger"">
                             <strong>Registration failed!</strong> Please try again later.
                         </div>");
+        }
+
+        [Fact]
+        public void Should_ErrorEmail_When_RegisterFormIsSubmit()
+        {
+            // Arrange
+            var register = InitTestRegister("testEmail", "test@test.tests", "testtest", "testtest");
+
+            // Assert
+            register.Instance.Success.Should().BeFalse();
+            register.Find("div").Children.Children("div").Children("div").Children("div").First().MarkupMatches(
+                @"<div class=""alert alert-danger"">
+                            <strong>Email is already in use!</strong> Please choose another one.
+                        </div>");
+        }
+
+        [Fact]
+        public void Should_ErrorLogin_When_RegisterFormIsSubmit()
+        {
+            // Arrange
+            var register = InitTestRegister("testLogin", "test@test.tests", "testtest", "testtest");
+
+            // Assert
+            register.Instance.Success.Should().BeFalse();
+            register.Find("div").Children.Children("div").Children("div").Children("div").First().MarkupMatches(
+                @"<div class=""alert alert-danger"">
+                            <strong>Login name already registered!</strong> Please choose another one.
+                        </div>");
+        }
+
+        [Fact]
+        public void Should_ErrorPasswordNotMatch_When_RegisterFormIsSubmit()
+        {
+            // Arrange
+            var register = InitTestRegister("testLogin", "test@test.tests", "testtest1", "testtest2");
+
+            // Assert
+            register.Instance.Success.Should().BeFalse();
+            register.Find("div").Children.Children("div").Children("div").Children("div").First().MarkupMatches(
+                @"<div class=""alert alert-danger"">
+                            The password and its confirmation do not match!
+                        </div>");
+        }
+
+        private IRenderedComponent<Register> InitTestRegister(string username, string email, string password, string confirmPassword)
+        {
+            Services.AddSingleton<IRegisterService, MockRegisterService>();
+
+            var modalService = new Mock<IModalService>();
+            Services.AddSingleton<IModalService>(modalService.Object);
+
+            var register = RenderComponent<Register>();
+
+            register.Instance.RegisterModel.Username = username;
+            register.Instance.RegisterModel.Email = email;
+            register.Instance.RegisterModel.Password = password;
+            register.Instance.RegisterModel.ConfirmPassword = confirmPassword;
+
+
+            // Act
+            var test = register.Find("form");
+            test.Submit();
+
+            Thread.Sleep(1000); //wait register handleSubmit
+            return register;
         }
     }
 }

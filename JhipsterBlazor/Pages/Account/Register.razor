@@ -45,16 +45,6 @@
                     
                     <EditForm Model="@RegisterModel" OnValidSubmit="@HandleSubmit" @ref="editForm">
                         <DataAnnotationsValidator />
-                        <!--<Validation Validator="@((e) => Validate(e,""))">
-                                <Field>
-                                    <FieldLabel >Username</FieldLabel>
-                                    <TextEdit Placeholder="Username">
-                                        <Feedback>
-                                            <ValidationError>Enter full name!</ValidationError>
-                                        </Feedback>
-                                    </TextEdit>
-                                </Field>
-                            </Validation>-->
                         <div class="form-group">
                             <label class="form-control-label" for="login">Username</label>
                             <DynInputText id="login" @bind-Value="RegisterModel.Username" class="form-control" placeholder="Username" />
