@@ -27,14 +27,12 @@ namespace JhipsterBlazor.Test.Helpers
         }
 
 
-        public static IServiceCollection AddMockAuthenticatedAuthorization(this IServiceCollection services, IIdentity identity)
+        public static IServiceCollection AddMockAuthenticatedAuthorization(this IServiceCollection services, ClaimsIdentity identity)
         {
-            var authenticationService = new Mock<AuthenticationStateProvider>();
-            authenticationService.Setup(auth => auth.GetAuthenticationStateAsync())
-                .Returns(() => Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
+            var authenticationService = new MockAuthenticationService(identity);
             services.AddScoped<IAuthorizationService, MockAuthorizationService>();
             services.AddScoped<IAuthorizationPolicyProvider, MockAuthorizationPolicyProvider>();
-            services.AddSingleton<AuthenticationStateProvider>(authenticationService.Object);
+            services.AddSingleton<AuthenticationStateProvider>(authenticationService);
             services.AddScoped<IAuthorizationHandlerProvider, DefaultAuthorizationHandlerProvider>();
             return services;
         }
