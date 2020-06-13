@@ -8,19 +8,19 @@ namespace JhipsterBlazor.Test.Helpers
 {
     public class MockAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
-        public async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly AuthorizationOptions options = new AuthorizationOptions();
 
-        public async Task<AuthorizationPolicy> GetDefaultPolicyAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
+            => Task.FromResult(options.DefaultPolicy);
 
-        public async Task<AuthorizationPolicy> GetFallbackPolicyAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+            => Task.FromResult(options.FallbackPolicy);
+
+        public Task<AuthorizationPolicy> GetPolicyAsync(string policyName) => Task.FromResult(
+            new AuthorizationPolicy(new[]
+                {
+                    new TestPolicyRequirement { PolicyName = policyName }
+                },
+                new[] { $"TestScheme:{policyName}" }));
     }
 }

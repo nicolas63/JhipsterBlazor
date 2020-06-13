@@ -1,4 +1,7 @@
-﻿using Blazored.Modal.Services;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Blazored.Modal.Services;
 using Bunit;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Pages;
@@ -19,27 +22,20 @@ namespace JhipsterBlazor.Test
         [Fact]
         public void Should_CallSignInMethod_When_SignInWasClick()
         {
-           // Arrange
-           //var modalService = new Mock<IModalService>();
-           // var authenticationService = new Mock<MockAuthenticationService>();
-           // var authorizationPolicyProvider = new Mock<IAuthorizationPolicyProvider>();
-           // var authorizationService = new Mock<IAuthorizationService>();
-           // authenticationService.Setup(authenticationService =>
-           //     authenticationService.SignIn(It.IsAny<LoginModel>()));
-           // Services.AddSingleton<AuthenticationStateProvider>(authenticationService.Object);
-           // Services.AddSingleton<IModalService>(modalService.Object);
-           // //Services.AddSingleton(typeof(ILogger<>), typeof(NullLogger));
-           // Services.AddScoped<IAuthorizationPolicyProvider, MockAuthorizationPolicyProvider>();
-           // Services.AddScoped<IAuthorizationService, MockAuthorizationService>();
-           // Services.AddScoped<IAuthorizationHandlerProvider, DefaultAuthorizationHandlerProvider>();
+            //Arrange
+            var modalService = new Mock<IModalService>();
+            Services.AddSingleton<IModalService>(modalService.Object);
+            Services.AddMockUnAuthenticateAuthorization();
+            var authenticationStateProvider = Services.GetService<AuthenticationStateProvider>();
 
-           // var authorizeComponent = RenderComponent<CascadingAuthenticationState>();
-           // // Act
-           // index.Find("a").Click();
+            var index = RenderComponent<Index>(ComponentParameterFactory.CascadingValue(authenticationStateProvider.GetAuthenticationStateAsync()));
+           
+            // Act
+            index.Find(".alert-link").Click();
 
-           // // Assert
-           // modalService.Verify(mock => mock.Show<Login>(It.IsAny<string>()),
-           //     Times.Once());
+            // Assert
+            modalService.Verify(mock => mock.Show<Login>(It.IsAny<string>()),
+                Times.Once());
         }
     }
 }
