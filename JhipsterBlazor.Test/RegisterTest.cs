@@ -91,20 +91,6 @@ namespace JhipsterBlazor.Test
                         </div>");
         }
 
-        [Fact]
-        public void Should_ErrorPasswordNotMatch_When_RegisterFormIsSubmit()
-        {
-            // Arrange
-            var register = InitTestRegister("testLogin", "test@test.tests", "testtest1", "testtest2");
-
-            // Assert
-            register.Instance.Success.Should().BeFalse();
-            register.Find("div").Children.Children("div").Children("div").Children("div").First().MarkupMatches(
-                @"<div class=""alert alert-danger"">
-                            The password and its confirmation do not match!
-                        </div>");
-        }
-
         private IRenderedComponent<Register> InitTestRegister(string username, string email, string password, string confirmPassword)
         {
             Services.AddSingleton<IRegisterService, MockRegisterService>();

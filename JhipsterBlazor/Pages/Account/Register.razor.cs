@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,27 +25,48 @@ namespace JhipsterBlazor.Pages.Account
 
         public RegisterModel RegisterModel = new RegisterModel();
 
+        private EditContext EditContext { get; set; }
+
         private EditForm editForm;
 
         public bool Success { get; private set; }
         public bool Error { get; private set; }
-        public bool DoNotMatch { get; private set; }
         public bool ErrorEmailExists { get; private set; }
         public bool ErrorUserExists { get; private set; }
 
+        private bool IsInvalid { get; set; }
+
+        private void IsInvalidForm(object s, FieldChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(RegisterModel.Username) &&
+                !string.IsNullOrEmpty(RegisterModel.ConfirmPassword) &&
+                !string.IsNullOrEmpty(RegisterModel.Password) &&
+                !string.IsNullOrEmpty(RegisterModel.Email))
+            {
+                if (editForm?.EditContext.Validate() == true)
+                {
+                    IsInvalid = false;
+                    return;
+                }
+            }
+
+            IsInvalid = true;
+
+        }
+
         protected override async Task OnInitializedAsync()
         {
+            IsInvalid = true;
+            EditContext = new EditContext(RegisterModel);
+            EditContext.OnFieldChanged += IsInvalidForm;
             await base.OnInitializedAsync();
         }
+
+
 
         private async Task HandleSubmit()
         {
             SetAllErrorFalse();
-            if (!RegisterModel.Password.Equals(RegisterModel.ConfirmPassword))
-            {
-                DoNotMatch = true;
-                return;
-            }
             var result = await RegisterService.Save(new UserSaveModel{
                 Email = RegisterModel.Email,
                 Login = RegisterModel.Username,
@@ -67,7 +89,6 @@ namespace JhipsterBlazor.Pages.Account
             Error = false;
             ErrorEmailExists = false;
             ErrorUserExists = false;
-            DoNotMatch = false;
         }
 
         private async Task ProcessError(HttpResponseMessage result)

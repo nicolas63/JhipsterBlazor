@@ -31,19 +31,13 @@
                             <strong>Email is already in use!</strong> Please choose another one.
                         </div>
                     }
-                    @if (DoNotMatch)
-                    {
-                        <div class="alert alert-danger">
-                            The password and its confirmation do not match!
-                        </div>
-                    }
                 </div>
             </div>
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     
-                    <EditForm Model="@RegisterModel" OnValidSubmit="@HandleSubmit" @ref="editForm">
+                    <EditForm EditContext="@EditContext" OnValidSubmit="@HandleSubmit" @ref="editForm">
                         <DataAnnotationsValidator />
                         <div class="form-group">
                             <label class="form-control-label" for="login">Username</label>
@@ -77,7 +71,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" disabled="@IsInvalid" class="btn btn-primary">Register</button>
                     </EditForm>
 
                     <div class="mt-3 alert alert-warning">
