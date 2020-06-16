@@ -75,6 +75,10 @@
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedModel\SharedModel.csproj" />
+  </ItemGroup>
+
 
   <ProjectExtensions><VisualStudio><UserProperties compilerconfig_1json__JsonSchema="http://json.schemastore.org/coffeelint" /></VisualStudio></ProjectExtensions>
 
