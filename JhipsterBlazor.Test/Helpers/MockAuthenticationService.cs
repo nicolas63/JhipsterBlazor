@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using JhipsterBlazor.Models;
@@ -10,26 +11,27 @@ namespace JhipsterBlazor.Test.Helpers
 {
     public class MockAuthenticationService : AuthenticationStateProvider,IAuthenticationService
     {
-        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            throw new NotImplementedException();
+            var identity = new ClaimsIdentity(new List<Claim>(), "JWT Auth");
+            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
         }
 
         public bool IsAuthenticated
         {
-            get => throw new NotImplementedException();
+            get => true;
             set => throw new NotImplementedException();
         }
 
         public UserModel CurrentUser
         {
-            get => throw new NotImplementedException();
+            get => new UserModel();
             set => throw new NotImplementedException();
         }
 
         public JwtToken JwtToken
         {
-            get => throw new NotImplementedException();
+            get => new JwtToken();
             set => throw new NotImplementedException();
         }
 
