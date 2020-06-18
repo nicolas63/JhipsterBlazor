@@ -79,10 +79,6 @@
     <ProjectReference Include="..\SharedModel\SharedModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SharedModel\SharedModel.csproj" />
-  </ItemGroup>
-
 
   <ProjectExtensions><VisualStudio><UserProperties compilerconfig_1json__JsonSchema="http://json.schemastore.org/coffeelint" /></VisualStudio></ProjectExtensions>
 
