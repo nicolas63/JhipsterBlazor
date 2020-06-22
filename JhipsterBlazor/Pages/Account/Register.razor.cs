@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
 using Blazorise;
 using SharedModel.Constants;
+using Toolbelt.Blazor;
 
 namespace JhipsterBlazor.Pages.Account
 {
@@ -22,6 +23,9 @@ namespace JhipsterBlazor.Pages.Account
 
         [Inject]
         private IModalService ModalService { get; set; }
+
+        [Inject]
+        private HttpClientInterceptor Interceptor { get; set; }
 
         public RegisterModel RegisterModel = new RegisterModel();
 
@@ -51,18 +55,22 @@ namespace JhipsterBlazor.Pages.Account
             }
 
             IsInvalid = true;
-
         }
 
         protected override async Task OnInitializedAsync()
         {
+            Interceptor.AfterSend += (s, e) =>
+            {
+                if (!e.Response?.IsSuccessStatusCode == true)
+                {
+                    Console.WriteLine("error http");
+                }
+            };
             IsInvalid = true;
             EditContext = new EditContext(RegisterModel);
             EditContext.OnFieldChanged += IsInvalidForm;
             await base.OnInitializedAsync();
         }
-
-
 
         private async Task HandleSubmit()
         {
