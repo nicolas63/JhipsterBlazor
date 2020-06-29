@@ -10,9 +10,10 @@
         <div>
             @if(alert != null && !string.IsNullOrEmpty(alert.Type)  && !string.IsNullOrEmpty(alert.Msg))
             {
-                <div type="@alert.Type">
-                    <pre>@((MarkupString)alert.Msg)</pre>
-                </div>
+                <Alert Color="Color.Danger" Visible="@alert.Visible">
+                    <AlertMessage>@((MarkupString)alert.Msg)</AlertMessage>
+                    <CloseButton Clicked="@(()=>alert.Visible = false)"/>
+                </Alert>
             }
         </div>
     }
@@ -66,14 +67,15 @@
         }
     }
 
-    private void AddErrorAlert(string ErrorMsg)
+    private void AddErrorAlert(string errorMsg)
     {
         Alerts.Add(new JhiAlert
         {
             Type = "danger",
-            Msg = ErrorMsg,
+            Msg = errorMsg,
             Timeout = 5000,
-            Scoped = true
+            Scoped = true,
+            Visible = true
         });
         StateHasChanged();
     }
