@@ -14,6 +14,5 @@ namespace SharedModel.Models
         public bool Toast { get; set; }
         public string Position { get; set; }
         public bool Scoped { get; set; }
-        public bool Visible { get; set; }
     }
 }

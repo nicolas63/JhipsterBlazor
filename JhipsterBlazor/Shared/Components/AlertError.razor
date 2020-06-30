@@ -1,4 +1,5 @@
 ﻿@using System.Net
+@using System.Timers
 @using SharedModel.Models
 @using Toolbelt.Blazor
 
@@ -10,9 +11,9 @@
         <div>
             @if(alert != null && !string.IsNullOrEmpty(alert.Type)  && !string.IsNullOrEmpty(alert.Msg))
             {
-                <Alert Color="Color.Danger" Visible="@alert.Visible">
+                <Alert Color="Color.Danger" Visible="true">
                     <AlertMessage>@((MarkupString)alert.Msg)</AlertMessage>
-                    <CloseButton Clicked="@(()=>alert.Visible = false)"/>
+                    <CloseButton Clicked="@(()=>RemoveAlert(alert))"/>
                 </Alert>
             }
         </div>
@@ -29,6 +30,12 @@
         Alerts = new List<JhiAlert>();
         Interceptor.AfterSend += HandleErrors;
         return base.OnInitializedAsync();
+    }
+
+    private void RemoveAlert(JhiAlert alert)
+    {
+        Alerts.Remove(alert);
+        StateHasChanged();
     }
 
     private void HandleErrors(object s, HttpClientInterceptorEventArgs e)
@@ -69,15 +76,31 @@
 
     private void AddErrorAlert(string errorMsg)
     {
-        Alerts.Add(new JhiAlert
+        var alert = new JhiAlert
         {
             Type = "danger",
             Msg = errorMsg,
             Timeout = 5000,
             Scoped = true,
-            Visible = true
-        });
+        };
+        Alerts.Add(alert);
+        RemoveAfter(alert, alert.Timeout);
         StateHasChanged();
+    }
+
+    private void RemoveAfter(JhiAlert alert, double timeout)
+    {
+        var timer = new Timer { Interval = timeout};
+        timer.Elapsed += (sender, args) =>
+        {
+            if (sender is Timer senderTimer)
+            {
+                senderTimer.Stop();
+            }
+
+            RemoveAlert(alert);
+        };
+        timer.Start();
     }
 
 }
