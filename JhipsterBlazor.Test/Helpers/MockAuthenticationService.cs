@@ -15,6 +15,11 @@ namespace JhipsterBlazor.Test.Helpers
     {
         public ClaimsIdentity Identity { get; set; }
 
+        public MockAuthenticationService()
+        {
+            
+        }
+
         public MockAuthenticationService(ClaimsIdentity identity)
         {
             Identity = identity;
@@ -33,7 +38,7 @@ namespace JhipsterBlazor.Test.Helpers
 
         public UserModel CurrentUser
         {
-            get => new UserModel(){Login = Identity.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier)).Value};
+            get => new UserModel(){Login = Identity?.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier)).Value};
             set => throw new NotImplementedException();
         }
 
