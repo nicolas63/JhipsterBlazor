@@ -14,6 +14,13 @@ namespace JhipsterBlazor.Test.Helpers
 {
     public class MockRegisterService : IRegisterService
     {
+
+        public const string SuccessUsername = "testSuccess";
+
+        public const string EmailUsername = "testEmail";
+
+        public const string LoginUsername = "testLogin";
+
         public virtual Task<HttpResponseMessage> Save(UserSaveModel registerModel)
         {
             var resultMsg = new RegisterResultRequest();
@@ -23,7 +30,7 @@ namespace JhipsterBlazor.Test.Helpers
             resultMsg.Params = "";
             resultMsg.TraceId = "";
             resultMsg.Type = "";
-            if (registerModel.Login == "testSuccess")
+            if (registerModel.Login == SuccessUsername)
             {
                 return Task.Run(() => new HttpResponseMessage()
                 {
@@ -32,12 +39,12 @@ namespace JhipsterBlazor.Test.Helpers
                 });
             }
 
-            if (registerModel.Login == "testEmail")
+            if (registerModel.Login == EmailUsername)
             {
                 resultMsg.Type = ErrorConst.EmailAlreadyUsedType;
             }
 
-            if (registerModel.Login == "testLogin")
+            if (registerModel.Login == LoginUsername)
             {
                 resultMsg.Type = ErrorConst.LoginAlreadyUsedType;
             }
