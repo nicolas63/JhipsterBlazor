@@ -1,4 +1,7 @@
 @page "/country"
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "ROLE_USER")]
 
 <div>
     <h2 id="page-heading">
@@ -15,27 +18,27 @@
     @*<jhi-alert-error></jhi-alert-error>
             TODO ADD ALERT
         <jhi-alert></jhi-alert>*@
-    
-    
 
-    @* TODO ADD QUERY SEARCH BAR 
-        <div class="row">
-        <div class="col-sm-12">
-            <form name="searchForm" class="form-inline">
-                <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
 
-                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
-                        <fa-icon icon="search"></fa-icon>
-                    </button>
 
-                    <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
-                        <fa-icon icon="trash-alt"></fa-icon>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>*@
+    @* TODO ADD QUERY SEARCH BAR
+            <div class="row">
+            <div class="col-sm-12">
+                <form name="searchForm" class="form-inline">
+                    <div class="input-group w-100 mt-3">
+                        <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+
+                        <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                            <fa-icon icon="search"></fa-icon>
+                        </button>
+
+                        <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+                            <fa-icon icon="trash-alt"></fa-icon>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>*@
 
 
     @if (Countries.Count == 0)
@@ -57,39 +60,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var country in Countries)
-                {
-                    <tr>
-                        <td><a href="/country/@country.Id/view">@country.Id</a></td>
-                        <td>@country.CountryName</td>
-                        <td>
-                            @if (country.Region != null)
-                            {
-                                <div>
-                                    <a href="/region/@country.Region.Id/view">@country.Region.Id</a>
+                    @foreach (var country in Countries)
+                    {
+                        <tr>
+                            <td><a href="/country/@country.Id/view">@country.Id</a></td>
+                            <td>@country.CountryName</td>
+                            <td>
+                                @if (country.Region != null)
+                                {
+                                    <div>
+                                        <a href="/region/@country.Region.Id/view">@country.Region.Id</a>
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group">
+                                    <a href="/country/@country.Id/view" class="btn btn-info btn-sm">
+                                        <Icon Name='"fa-eye"' />
+                                        <span class="d-none d-md-inline">View</span>
+                                    </a>
+
+                                    <a href="/country/@country.Id/edit" class="btn btn-primary btn-sm">
+                                        <Icon Name='"fa-pencil-alt"' />
+                                        <span class="d-none d-md-inline">Edit</span>
+                                    </a>
+
+                                    <button @onclick="() => Delete(country.Id)" class="btn btn-danger btn-sm">
+                                        <Icon Name='"fa-times"' />
+                                        <span class="d-none d-md-inline">Delete</span>
+                                    </button>
                                 </div>
-                            }
-                        </td>
-                        <td class="text-right">
-                            <div class="btn-group">
-                                <a href="/country/@country.Id/view" class="btn btn-info btn-sm">
-                                    <Icon Name='"fa-eye"' />
-                                    <span class="d-none d-md-inline">View</span>
-                                </a>
-
-                                <a href="/country/@country.Id/edit" class="btn btn-primary btn-sm">
-                                    <Icon Name='"fa-pencil-alt"' />
-                                    <span class="d-none d-md-inline">Edit</span>
-                                </a>
-
-                                <button @onclick="() => Delete(country.Id)" class="btn btn-danger btn-sm">
-                                    <Icon Name='"fa-times"' />
-                                    <span class="d-none d-md-inline">Delete</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
