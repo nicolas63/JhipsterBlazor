@@ -3,15 +3,13 @@
 @using SharedModel.Models
 @using Toolbelt.Blazor
 
-@inject HttpClientInterceptor Interceptor
-
 <div class="alerts" role="alert">
     @foreach(var alert in Alerts)
     {
         <div>
-            @if(alert != null && !string.IsNullOrEmpty(alert.Type)  && !string.IsNullOrEmpty(alert.Msg))
+            @if(alert != null  && !string.IsNullOrEmpty(alert.Msg))
             {
-                <Alert Color="Color.Danger" Visible="true">
+                <Alert Color="@GetColorAlert(alert)" Visible="true">
                     <AlertMessage>@((MarkupString)alert.Msg)</AlertMessage>
                     <CloseButton Clicked="@(()=>RemoveAlert(alert))"/>
                 </Alert>

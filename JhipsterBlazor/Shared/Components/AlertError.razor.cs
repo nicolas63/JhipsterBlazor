@@ -2,6 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Timers;
+using Blazorise;
+using Microsoft.AspNetCore.Components;
+using SharedModel.Constants;
 using SharedModel.Models;
 using Toolbelt.Blazor;
 
@@ -11,6 +14,9 @@ namespace JhipsterBlazor.Shared.Components
     {
         private List<JhiAlert> Alerts { get; set; }
 
+        [Inject] 
+        private HttpClientInterceptor Interceptor { get; set; }
+
         protected override Task OnInitializedAsync()
         {
             Alerts = new List<JhiAlert>();
@@ -18,20 +24,20 @@ namespace JhipsterBlazor.Shared.Components
             return base.OnInitializedAsync();
         }
 
-        public void AddAlert(JhiAlert alert)
+        public async void AddAlert(JhiAlert alert)
         {
             Alerts.Add(alert);
             if (alert.Timeout != 0)
             {
                 RemoveAfter(alert, alert.Timeout);
             }
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void RemoveAlert(JhiAlert alert)
+        public async void RemoveAlert(JhiAlert alert)
         {
             Alerts.Remove(alert);
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
 
         private void HandleErrors(object s, HttpClientInterceptorEventArgs e)
@@ -74,9 +80,9 @@ namespace JhipsterBlazor.Shared.Components
         {
             var alert = new JhiAlert
             {
-                Type = "danger",
+                Type = TypeAlert.Danger,
                 Msg = errorMsg,
-                Timeout = 5000,
+                Timeout = 3000,
                 Scoped = true,
             };
             AddAlert(alert);
@@ -95,6 +101,23 @@ namespace JhipsterBlazor.Shared.Components
                 RemoveAlert(alert);
             };
             timer.Start();
+        }
+
+        private Color GetColorAlert(JhiAlert alert)
+        {
+            switch (alert.Type)
+            {
+                case TypeAlert.Danger:
+                    return Color.Danger;
+                case TypeAlert.Info:
+                    return Color.Info;
+                case TypeAlert.Success:
+                    return Color.Success;
+                case TypeAlert.Warning:
+                    return Color.Warning;
+                default:
+                    return Color.Danger;
+            }
         }
     }
 }
