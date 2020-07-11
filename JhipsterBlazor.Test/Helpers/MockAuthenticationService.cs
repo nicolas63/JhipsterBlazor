@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using JhipsterBlazor.Models;
@@ -11,10 +13,21 @@ namespace JhipsterBlazor.Test.Helpers
 {
     public class MockAuthenticationService : AuthenticationStateProvider,IAuthenticationService
     {
+        public ClaimsIdentity Identity { get; set; }
+
+        public MockAuthenticationService()
+        {
+            
+        }
+
+        public MockAuthenticationService(ClaimsIdentity identity)
+        {
+            Identity = identity;
+        }
+
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var identity = new ClaimsIdentity(new List<Claim>(), "JWT Auth");
-            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity)));
+            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(Identity)));
         }
 
         public bool IsAuthenticated
@@ -25,7 +38,7 @@ namespace JhipsterBlazor.Test.Helpers
 
         public UserModel CurrentUser
         {
-            get => new UserModel();
+            get => new UserModel(){Login = Identity?.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier)).Value};
             set => throw new NotImplementedException();
         }
 

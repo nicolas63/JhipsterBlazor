@@ -1,4 +1,7 @@
 ﻿@page "/admin/user-management/{Id}/view"
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "ROLE_ADMIN")]
 
 <div class="row justify-content-center">
     <div class="col-8">

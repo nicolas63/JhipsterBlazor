@@ -15,7 +15,7 @@
                     Home
                 </BarLink>
             </BarItem>
-            <AuthorizeView>
+            <AuthorizeView Roles="ROLE_USER">
                 <Authorized>
                     <BarItem>
                         <BarDropdown Class="nav-link">
@@ -35,6 +35,10 @@
                             </BarDropdownMenu>
                         </BarDropdown>
                     </BarItem>
+                </Authorized>
+            </AuthorizeView>
+            <AuthorizeView Roles="ROLE_ADMIN">
+            <Authorized>
                     <BarItem>
                         <BarDropdown>
                             <BarDropdownToggle Class="nav-item dropdown pointer">

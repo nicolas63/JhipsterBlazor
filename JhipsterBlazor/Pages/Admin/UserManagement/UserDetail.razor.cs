@@ -18,7 +18,7 @@ namespace JhipsterBlazor.Pages.Admin.UserManagement
         private INavigationService NavigationService { get; set; }
 
         private UserModel CurrentUser { get; set; }
-
+        
         protected override async Task OnInitializedAsync()
         {
             CurrentUser = null;
