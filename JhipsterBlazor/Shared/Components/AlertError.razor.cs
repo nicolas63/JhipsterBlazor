@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Timers;
@@ -12,14 +13,17 @@ namespace JhipsterBlazor.Shared.Components
 {
     public partial class AlertError
     {
-        private List<JhiAlert> Alerts { get; set; }
+        public const string NotFoundError = "Not found";
+        public const string NotReachableError = "Server not reachable";
+        public const string HttpErrorHeader = "app-error";
+
+        private List<JhiAlert> Alerts { get; } = new List<JhiAlert>();
 
         [Inject] 
         private HttpClientInterceptor Interceptor { get; set; }
 
         protected override Task OnInitializedAsync()
         {
-            Alerts = new List<JhiAlert>();
             Interceptor.AfterSend += HandleErrors;
             return base.OnInitializedAsync();
         }
@@ -40,6 +44,11 @@ namespace JhipsterBlazor.Shared.Components
             await InvokeAsync(StateHasChanged);
         }
 
+        public IReadOnlyCollection<JhiAlert> GetAlerts()
+        {
+            return Alerts.AsReadOnly();
+    }
+
         private void HandleErrors(object s, HttpClientInterceptorEventArgs e)
         {
             if (e.Response?.IsSuccessStatusCode == true)
@@ -48,7 +57,7 @@ namespace JhipsterBlazor.Shared.Components
             }
             if (e.Response == null)
             {
-                AddErrorAlert("Server not reachable");
+                AddErrorAlert(NotReachableError);
                 return;
             }
             switch (e.Response.StatusCode)
@@ -57,18 +66,18 @@ namespace JhipsterBlazor.Shared.Components
                     var errorHandler = "";
                     foreach (var httpResponseHeader in e.Response.Headers)
                     {
-                        if (httpResponseHeader.Key.EndsWith("app-error"))
+                        if (httpResponseHeader.Key.EndsWith(HttpErrorHeader))
                         {
-                            errorHandler = httpResponseHeader.Key;
+                            errorHandler = e.Response.Headers.GetValues(httpResponseHeader.Key).FirstOrDefault();
                         }
                     }
-                    if (errorHandler != "")
+                    if (!string.IsNullOrEmpty(errorHandler))
                     {
                         AddErrorAlert(errorHandler);
                     }
                     break;
                 case HttpStatusCode.NotFound:
-                    AddErrorAlert("Not found");
+                    AddErrorAlert(NotFoundError);
                     break;
                 default:
                     AddErrorAlert(e.Response.Content.ToString());
