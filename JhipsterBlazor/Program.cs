@@ -15,6 +15,7 @@ using JhipsterBlazor.Services.EntityServices.User;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace JhipsterBlazor
 {
@@ -34,8 +35,6 @@ namespace JhipsterBlazor
 
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            
             builder.Services.AddSingleton<ISessionStorageService, SessionStorageService>().AddSingleton<ISyncSessionStorageService, SessionStorageService>();
             builder.Services.AddBlazoredModal();
 
@@ -48,6 +47,14 @@ namespace JhipsterBlazor
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();
             builder.Services.AddSingleton<IRegisterService, RegisterService>();
+
+            /* #### Http Interceptor #####*/
+            builder.Services.AddHttpClientInterceptor();
+            builder.Services.AddTransient(sp => new HttpClient
+            {
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            }.EnableIntercept(sp));
+            /* #### Http Interceptor #####*/
 
             builder.Services.AddAuthorizationCore();
             

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,7 +8,6 @@ using JhipsterBlazor.Services.AccountServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
-using Blazorise;
 using SharedModel.Constants;
 
 namespace JhipsterBlazor.Pages.Account
@@ -51,7 +48,6 @@ namespace JhipsterBlazor.Pages.Account
             }
 
             IsInvalid = true;
-
         }
 
         protected override async Task OnInitializedAsync()
@@ -61,8 +57,6 @@ namespace JhipsterBlazor.Pages.Account
             EditContext.OnFieldChanged += IsInvalidForm;
             await base.OnInitializedAsync();
         }
-
-
 
         private async Task HandleSubmit()
         {
