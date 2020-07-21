@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Blazored.Modal;
 using Xunit;
 using Bunit;
-using Bunit.Mocking.JSInterop;
 using FluentAssertions;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Pages;
@@ -25,7 +24,7 @@ namespace JhipsterBlazor.Test
     public class LoginTest : TestContext
     {
         [Fact]
-        public void Should_CallSignInMethod_When_LoginFormIsSubmit()
+        public void Should_CallSignInMethod_When_LoginFormIsSubmitted()
         {
             // Arrange
             var loginModel = new LoginModel()

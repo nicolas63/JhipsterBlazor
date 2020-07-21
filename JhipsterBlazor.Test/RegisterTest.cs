@@ -19,7 +19,7 @@ namespace JhipsterBlazor.Test
     public class RegisterTest : TestContext
     {
         [Fact]
-        public void Should_CallSaveInMethod_When_RegisterFormIsSubmit()
+        public void Should_CallSaveInMethod_When_RegisterFormIsSubmitted()
         {
             // Arrange
             var register = InitTestRegister(MockRegisterService.SuccessUsername, "test@test.tests", "testtest", "testtest");
@@ -37,7 +37,7 @@ namespace JhipsterBlazor.Test
         }
 
         [Fact]
-        public void Should_Error_When_RegisterFormIsSubmit()
+        public void Should_Error_When_RegisterFormIsSubmitted()
         {
             // Arrange
             var register = InitTestRegister("test", "test@test.tests", "testtest", "testtest");
@@ -54,7 +54,7 @@ namespace JhipsterBlazor.Test
         }
 
         [Fact]
-        public void Should_ErrorEmail_When_RegisterFormIsSubmit()
+        public void Should_ErrorEmail_When_RegisterFormIsSubmitted()
         {
             // Arrange
             var register = InitTestRegister(MockRegisterService.EmailUsername, "test@test.tests", "testtest", "testtest");
@@ -71,7 +71,7 @@ namespace JhipsterBlazor.Test
         }
 
         [Fact]
-        public void Should_ErrorLogin_When_RegisterFormIsSubmit()
+        public void Should_ErrorLogin_When_RegisterFormIsSubmitted()
         {
             // Arrange
             var register = InitTestRegister(MockRegisterService.LoginUsername, "test@test.tests", "testtest", "testtest");

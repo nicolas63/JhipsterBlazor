@@ -8,9 +8,9 @@ namespace JhipsterBlazor.Pages.Utils
     {
         private readonly NavigationManager _navigationManagerBase;
 
-        public Stack<string> PreviousStack { get; set; } = new Stack<string>();
+        private Stack<string> PreviousStack { get; } = new Stack<string>();
 
-        public Stack<string> NextStack { get; set; } = new Stack<string>();
+        private Stack<string> NextStack { get; } = new Stack<string>();
 
         public NavigationService(NavigationManager navigationManagerBase)
         {
