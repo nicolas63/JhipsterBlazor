@@ -32,6 +32,15 @@ namespace JhipsterBlazor.Pages.Account
         public bool ErrorUserExists { get; private set; }
 
         private bool IsInvalid { get; set; }
+        
+
+        protected override async Task OnInitializedAsync()
+        {
+            IsInvalid = true;
+            EditContext = new EditContext(RegisterModel);
+            EditContext.OnFieldChanged += IsInvalidForm;
+            await base.OnInitializedAsync();
+        }
 
         private void IsInvalidForm(object s, FieldChangedEventArgs e)
         {
@@ -48,14 +57,6 @@ namespace JhipsterBlazor.Pages.Account
             }
 
             IsInvalid = true;
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            IsInvalid = true;
-            EditContext = new EditContext(RegisterModel);
-            EditContext.OnFieldChanged += IsInvalidForm;
-            await base.OnInitializedAsync();
         }
 
         private async Task HandleSubmit()
