@@ -36,30 +36,25 @@ namespace JhipsterBlazor.Services.EntityServices
 
         public virtual async Task<IList<T>> GetAll()
         {
-            //todo catch error like auth error
             return await _httpClient.GetFromJsonAsync<IList<T>>(BaseUrl);
         }
 
         public virtual async Task<T> Get(string id)
         {
-            //todo catch error like auth error
             return await _httpClient.GetFromJsonAsync<T>($"{BaseUrl}/{id}");
         }
 
         public virtual async Task Add(T model)
         {
-            //todo catch error like auth error
             await _httpClient.PostAsJsonAsync(BaseUrl,model);
         }
         public virtual async Task Update(T model)
         {
-            //todo catch error like auth error
             await _httpClient.PutAsJsonAsync(BaseUrl, model);
         }
 
         public virtual async Task Delete(string id)
         {
-            //todo catch error like auth error
             await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
         }
 
