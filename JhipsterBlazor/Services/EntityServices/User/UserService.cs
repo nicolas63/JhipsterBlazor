@@ -11,7 +11,7 @@ namespace JhipsterBlazor.Services.EntityServices.User
 {
     public class UserService : AbstractEntityService<UserModel>,IUserService
     {
-        public UserService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, IAlertService alertService) : base(httpClient, authenticationStateProvider, alertService, "/api/users")
+        public UserService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider) : base(httpClient, authenticationStateProvider, "/api/users")
         {
         }
 

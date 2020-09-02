@@ -12,18 +12,16 @@ namespace JhipsterBlazor.Services.EntityServices
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        private readonly IAlertService _alertService;
 
         protected readonly HttpClient _httpClient;
 
         protected JwtToken JwtToken { get; set; }
         protected string BaseUrl { get; }
 
-        public AbstractEntityService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, IAlertService alertService, string baseUrl)
+        public AbstractEntityService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider, string baseUrl)
         {
             _httpClient = httpClient;
             _authenticationStateProvider = authenticationStateProvider;
-            _alertService = alertService;
             _httpClient.BaseAddress = new Uri(Configuration.BaseUri);
             var authenticationService = _authenticationStateProvider as IAuthenticationService;
             JwtToken = authenticationService?.JwtToken;

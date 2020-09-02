@@ -42,31 +42,18 @@ namespace JhipsterBlazor
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             
             builder.Services.AddSingleton<IUserService, UserService>();
-            builder.Services.AddSingleton<IAlertService, AlertService>();
 
             builder.Services.AddSingleton<ICountryService, CountryService>();
             builder.Services.AddSingleton<IRegionService, RegionService>();
             builder.Services.AddSingleton<IRegisterService, RegisterService>();
 
-            /* #### Http Interceptor #####*/
             builder.Services.AddHttpClientInterceptor();
             builder.Services.AddTransient(sp => new HttpClient
             {
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
             }.EnableIntercept(sp));
-            /* #### Http Interceptor #####*/
 
             builder.Services.AddAuthorizationCore();
-            
-            //config =>
-            //{
-            //    //config.AddPolicy(Policies.IsAdmin, Policies.IsAdminPolicy());
-            //    //config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
-            //    //config.AddPolicy(Policies.IsReadOnly, Policies.IsUserPolicy());
-            //    // config.AddPolicy(Policies.IsMyDomain, Policies.IsMyDomainPolicy());  Only works on the server end
-            //});
-
-          
 
             var host = builder.Build();
 
