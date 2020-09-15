@@ -12,7 +12,9 @@ using Bunit;
 using Bunit.Rendering;
 using FluentAssertions;
 using JhipsterBlazor.Models;
+using JhipsterBlazor.Pages.Utils;
 using JhipsterBlazor.Services.EntityServices.Country;
+using JhipsterBlazor.Services.EntityServices.Region;
 using JhipsterBlazor.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,15 +26,21 @@ namespace JhipsterBlazor.Test.Pages.Entities.Country
 {
     public class CountryUpdateTest : TestContext
     {
-        /*private readonly Mock<ICountryService> _countryService;
+        private readonly Mock<ICountryService> _countryService;
+        private readonly Mock<IRegionService> _regionService;
         private readonly Mock<IModalService> _modalService;
+        private readonly Mock<INavigationService> _navidationService;
         private readonly AutoFixture.Fixture _fixture = new AutoFixture.Fixture();
 
         public CountryUpdateTest()
         {
             _countryService = new Mock<ICountryService>();
+            _regionService = new Mock<IRegionService>();
             _modalService = new Mock<IModalService>();
+            _navidationService = new Mock<INavigationService>();
+            Services.AddSingleton<INavigationService>(_navidationService.Object);
             Services.AddSingleton<ICountryService>(_countryService.Object);
+            Services.AddSingleton<IRegionService>(_regionService.Object);
             Services.AddSingleton<IModalService>(_modalService.Object);
             Services.AddBlazorise(options =>
                 {
@@ -45,61 +53,45 @@ namespace JhipsterBlazor.Test.Pages.Entities.Country
 
 
         [Fact]
-        public void Should_DisplayAllCountries_When_CountriesArePresent()
+        public void Should_UpdateSelectedCountry_When_FormIsSubmitWithId()
         {
             //Arrange
-            var countries = _fixture.CreateMany<CountryModel>(10);
-            _countryService.Setup(service => service.GetAll()).Returns(Task.FromResult(countries.ToList() as IList<CountryModel>));
-            var countryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.Country>();
+            var regions = _fixture.CreateMany<RegionModel>(10);
+            _regionService.Setup(service => service.GetAll()).Returns(Task.FromResult(regions.ToList() as IList<RegionModel>));
+
+            var countryToUpdate = _fixture.Create<CountryModel>();
+            countryToUpdate.Id = 1; 
+
+            _countryService.Setup(service => service.Get(It.IsAny<string>())).Returns(Task.FromResult(countryToUpdate));
+            
+            var updateCountryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.CountryUpdate>(ComponentParameter.CreateParameter("Id", 1));
 
 
             // Act
-            var countriesTableBody = countryPage.Find("tbody");
+            var countryform = updateCountryPage.Find("form");
+            countryform.Submit();
 
             // Assert
-            countriesTableBody.ChildElementCount.Should().Be(10);
+            _countryService.Verify(service => service.Update(countryToUpdate),Times.Once);
         }
 
         [Fact]
-        public void Should_DisplayNoCountry_When_CountriesLengthIsZero()
+        public void Should_AddCountry_When_FormIsSubmitWithoutId()
         {
             //Arrange
-            var countries = new List<CountryModel>();
-            _countryService.Setup(service => service.GetAll()).Returns(Task.FromResult(countries.ToList() as IList<CountryModel>));
-            var countryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.Country>();
+            var regions = _fixture.CreateMany<RegionModel>(10);
+            _regionService.Setup(service => service.GetAll()).Returns(Task.FromResult(regions.ToList() as IList<RegionModel>));
+            
+            var updateCountryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.CountryUpdate>(ComponentParameter.CreateParameter("Id", 0));
 
 
             // Act
-            var span = countryPage.Find("div>span");
+            var countryform = updateCountryPage.Find("form");
+            countryform.Submit();
 
             // Assert
-            span.MarkupMatches("<span>No countries found</span>");
+            _countryService.Verify(service => service.Add(It.IsAny<CountryModel>()), Times.Once);
         }
-
-        [Fact]
-        public void Should_DeleteCountry_WhenDeleteButtonClicked()
-        {
-            //Arrange
-            var countries = _fixture.CreateMany<CountryModel>(10);
-            _countryService.Setup(service => service.GetAll()).Returns(Task.FromResult(countries.ToList() as IList<CountryModel>));
-            //_countryService.Setup(service => service.De()).Returns(Task.FromResult(countries.ToList() as IList<CountryModel>));
-            var modalService = new Mock<IModalService>();
-            Services.AddSingleton(modalService.Object); 
-           
-            var modalRef = new Mock<IModalReference>();
-            modalRef.Setup(mock => mock.Result).Returns(Task.FromResult(ModalResult.Ok(new { })));
-            modalService.Setup(service => service.Show<DeleteModal>(It.IsAny<string>())).Returns(modalRef.Object);
-            var countryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.Country>();
-            // Act
-            var countryToDelete = countries.First();
-
-
-            // Assert
-            countryPage.Find("td>div>button").Click();
-            _countryService.Verify(service => service.Delete(countryToDelete.Id.ToString()), Times.Once);
-            var countriesTableBody = countryPage.Find("tbody");
-            countriesTableBody.ChildElementCount.Should().Be(9);
-        }*/
 
     }
 }
