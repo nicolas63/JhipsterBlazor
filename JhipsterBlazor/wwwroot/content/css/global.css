@@ -23,7 +23,7 @@ a:hover {
   color: #533f03; }
 
 /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
-a:not([href]):not([tabindex]):hover.dropdown-item {
+a.dropdown-item:not([href]):not([tabindex]):hover {
   color: #16181b; }
 
 /* override .dropdown-item.active background-color on hover */
@@ -163,7 +163,7 @@ Main page styles
   background-size: contain; }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .hipster {
     background: url("../images/jhipster_family_member_1.svg") no-repeat center top;
     background-size: contain; } }
@@ -196,3 +196,5 @@ Logo styles
   vertical-align: middle;
   background: url("../images/logo-jhipster.png") no-repeat center center;
   background-size: contain; }
+
+/*# sourceMappingURL=global.scss */

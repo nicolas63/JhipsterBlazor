@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="compilerconfig.json" />
     <Content Remove="wwwroot\content\images\jhipster_family_member_0.svg" />
     <Content Remove="wwwroot\content\images\jhipster_family_member_0_head-192.png" />
     <Content Remove="wwwroot\content\images\jhipster_family_member_0_head-256.png" />
@@ -32,11 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
     <None Include="wwwroot\content\images\jhipster_family_member_0.svg" />
     <None Include="wwwroot\content\images\jhipster_family_member_0_head-192.png" />
     <None Include="wwwroot\content\images\jhipster_family_member_0_head-256.png" />
@@ -66,7 +60,6 @@
     <PackageReference Include="Blazored.SessionStorage" Version="1.0.12" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.1.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.1.2" />
-    <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />
@@ -76,8 +69,24 @@
     <PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="9.1.0" />
   </ItemGroup>
 
+  <Target Name="CompileStaticAssets" AfterTargets="AfterBuild">
+    <Exec Command="webcompiler -r wwwroot/content/scss -o wwwroot/content/css -z disable -p disable" StandardOutputImportance="high" />
+    <Exec Command="webcompiler -r wwwroot/content/scss -o wwwroot/content/css -z disable -p disable -m disable" StandardOutputImportance="high" />
+   </Target>
+
+  <ItemGroup>
+    <!--specify file extensions here as needed-->
+    <Watch Include="**\*.scss" />
+  </ItemGroup>
+
+
   <ItemGroup>
     <ProjectReference Include="..\SharedModel\SharedModel.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\content\css\" />
   </ItemGroup>
 
 
