@@ -15,7 +15,7 @@ namespace JhipsterBlazor.Pages.Admin.UserManagement
     {
         private IList<UserModel> UserModels { get; set; }
 
-        [Inject]
+        [CascadingParameter]
         private IModalService ModalService { get; set; }
 
         [Inject]

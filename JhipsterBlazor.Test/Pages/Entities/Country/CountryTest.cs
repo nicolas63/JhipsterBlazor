@@ -8,6 +8,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Bunit;
+using Bunit.Rendering;
 using FluentAssertions;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services.EntityServices.Country;
@@ -84,7 +85,7 @@ namespace JhipsterBlazor.Test.Pages.Entities.Country
             var modalRef = new Mock<IModalReference>();
             modalRef.Setup(mock => mock.Result).Returns(Task.FromResult(ModalResult.Ok(new { })));
             _modalService.Setup(service => service.Show<DeleteModal>(It.IsAny<string>())).Returns(modalRef.Object);
-            var countryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.Country>();
+            var countryPage = RenderComponent<JhipsterBlazor.Pages.Entities.Country.Country>(ComponentParameterFactory.CascadingValue(_modalService.Object));
             // Act
             var countryToDelete = countries.First();
 

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Blazored.Modal;
+using Blazored.Modal.Services;
 using JhipsterBlazor.Models;
 using JhipsterBlazor.Services;
 using Microsoft.AspNetCore.Components;
@@ -11,7 +12,7 @@ namespace JhipsterBlazor.Pages
     {
         [Inject]
         public AuthenticationStateProvider AuthenticationService { get; set; }
-        
+
         [CascadingParameter] 
         public BlazoredModalInstance BlazoredModal { get; set; }
 

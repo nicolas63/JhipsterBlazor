@@ -15,7 +15,7 @@ namespace JhipsterBlazor.Shared
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
-        [Inject]
+        [CascadingParameter]
         private IModalService ModalService { get; set; }
 
         private async Task SignIn()

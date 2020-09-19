@@ -22,7 +22,7 @@ namespace JhipsterBlazor.Test
             Services.AddMockUnAuthenticateAuthorization();
             var authenticationStateProvider = Services.GetService<AuthenticationStateProvider>();
 
-            var index = RenderComponent<Index>(ComponentParameterFactory.CascadingValue(authenticationStateProvider.GetAuthenticationStateAsync()));
+            var index = RenderComponent<Index>(ComponentParameterFactory.CascadingValue(authenticationStateProvider.GetAuthenticationStateAsync()), ComponentParameterFactory.CascadingValue(modalService.Object));
            
             // Act
             index.Find(".alert-link").Click();

@@ -17,7 +17,7 @@ namespace JhipsterBlazor.Pages.Account
         [Inject]
         private IRegisterService RegisterService{ get; set; }
 
-        [Inject]
+        [CascadingParameter]
         private IModalService ModalService { get; set; }
 
         public RegisterModel RegisterModel = new RegisterModel();

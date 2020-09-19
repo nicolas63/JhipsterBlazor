@@ -14,7 +14,7 @@ namespace JhipsterBlazor.Pages.Entities.Country
         [Inject]
         private ICountryService CountryService { get; set; }
 
-        [Inject]
+        [CascadingParameter]
         private IModalService ModalService { get; set; }
 
         private IList<CountryModel> Countries { get; set; } = new List<CountryModel>();
