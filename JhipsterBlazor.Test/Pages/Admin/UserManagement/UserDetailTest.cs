@@ -19,13 +19,13 @@ using Xunit;
 
 namespace JhipsterBlazor.Test.Pages.Admin.UserManagement
 {
-    public class UserDetailTest : TestContext
+    public class CountryDetailTest : TestContext
     {
         private readonly Mock<IUserService> _userService;
         private readonly Mock<INavigationService> _navidationService;
         private readonly AutoFixture.Fixture _fixture = new AutoFixture.Fixture();
 
-        public UserDetailTest()
+        public CountryDetailTest()
         {
             _userService = new Mock<IUserService>();
             _navidationService = new Mock<INavigationService>();

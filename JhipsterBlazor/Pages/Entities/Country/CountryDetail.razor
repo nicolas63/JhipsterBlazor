@@ -5,7 +5,7 @@
 
 <div class="row justify-content-center">
     <div class="col-8">
-        @if (Country != null)
+        @if (Country != null && Country.Id != 0)
         {
             <div>
                 <h2><span>Country</span>@Country.Id</h2>
